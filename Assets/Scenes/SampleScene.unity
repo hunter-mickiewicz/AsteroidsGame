@@ -138,6 +138,7 @@ GameObject:
   - component: {fileID: 223312472}
   - component: {fileID: 223312474}
   - component: {fileID: 223312473}
+  - component: {fileID: 223312475}
   m_Layer: 0
   m_Name: Player
   m_TagString: PlayerShip
@@ -313,6 +314,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 1000
+--- !u!68 &223312475
+EdgeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 223312467}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_EdgeRadius: 0
+  m_Points:
+  - {x: -0.155, y: 0}
+  - {x: 0.155, y: 0}
+  m_AdjacentStartPoint: {x: 0, y: 0}
+  m_AdjacentEndPoint: {x: 0, y: 0}
+  m_UseAdjacentStartPoint: 0
+  m_UseAdjacentEndPoint: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -493,6 +516,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1142880321 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6740458469258348514, guid: 15ab95617d724b0419e7f7bdeed8732f, type: 3}
+  m_PrefabInstance: {fileID: 5600175065335010822}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1142880322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1142880321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ed1d931bab133840aafa92b21186c51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  elements: 
 --- !u!1 &1514243546
 GameObject:
   m_ObjectHideFlags: 0
@@ -505,7 +546,7 @@ GameObject:
   - component: {fileID: 1514243547}
   - component: {fileID: 1514243549}
   - component: {fileID: 1514243550}
-  - component: {fileID: 1514243551}
+  - component: {fileID: 1514243552}
   m_Layer: 0
   m_Name: Coin
   m_TagString: Untagged
@@ -598,7 +639,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1514243546}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -611,20 +652,22 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &1514243551
-MonoBehaviour:
+--- !u!58 &1514243552
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1514243546}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56e92cf8f2044db4ea31cc58a6b7d02d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ship: {fileID: 0}
-  boostThrust: 20
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.8
 --- !u!1001 &1967853117
 PrefabInstance:
   m_ObjectHideFlags: 0
