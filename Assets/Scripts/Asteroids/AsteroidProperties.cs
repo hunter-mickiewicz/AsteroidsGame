@@ -127,10 +127,12 @@ public class AsteroidProperties : MonoBehaviour
         foreach(string element in elementArray)
         {
             //doing 7/24, + or - 1/24 (halfway between 1/3 and 1/24
+            Debug.Log(rel);
             int frac = 7;
             frac += ran.Next(-1, 1);
             
-            int elemMass = rel / (frac / 24);
+            int elemMass = (int)(rel * (double)(frac / 24));
+            Debug.Log(elemMass);
             rel -= elemMass;
             elements[element] = elemMass;
         }
