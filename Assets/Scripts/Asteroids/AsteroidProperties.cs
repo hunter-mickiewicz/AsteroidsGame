@@ -47,14 +47,15 @@ public class AsteroidProperties : MonoBehaviour
         }
 
         //Uncomment to print out the values generated
-        /*
+        
         foreach (KeyValuePair<string, double> entry in elements)
         {
             Debug.Log(entry);
         }
-        */
+        
 
         //Todo: Calculate mass dependent on tier and number of elements
+        //      Add some deviance to generated resource numbers (seeing too many of the same numbers)
     }
 
     void calculateDarkMatter(double rel, System.Random ran) {
@@ -89,6 +90,10 @@ public class AsteroidProperties : MonoBehaviour
 
             //takes a random chunk out of working mass, assigns in dictionary
             double elemMass = workingMass / frac;
+
+            frac = ((double)(10 + ran.Next(-2, 1)) / 10);
+            elemMass *= frac;
+
             rel -= elemMass;
             elements[element] = elemMass;
         }
@@ -114,6 +119,10 @@ public class AsteroidProperties : MonoBehaviour
 
             //takes a random chunk out of working mass, assigns in dictionary
             double elemMass = workingMass / frac;
+
+            frac = ((double)(10 + ran.Next(-2, 1)) / 10);
+            elemMass *= frac;
+
             rel -= elemMass;
             elements[element] = elemMass;
         }
@@ -133,6 +142,10 @@ public class AsteroidProperties : MonoBehaviour
             frac += ran.Next(-1, 1);
 
             double elemMass = rel * frac / 24;
+
+            frac = ((double)(10 + ran.Next(-2, 1)) / 10);
+            elemMass *= frac;
+
             rel -= elemMass;
             elements[element] = elemMass;
         }
