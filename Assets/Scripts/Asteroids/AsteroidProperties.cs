@@ -17,11 +17,10 @@ public class AsteroidProperties : MonoBehaviour
         */
         //Instantiate random number generator
         System.Random gen = new System.Random();
-        //int tier = gen.Next(0,100);// (Start, stop)
-        int tier = 99;
+        int tier = gen.Next(0,100);// (Start, stop)
         double relMass = 100 + gen.Next(1,10);
 
-        //calculates which tier the asteroid is in, falls through to calculate elements
+        //calculates which tier the asteroid is in, then calculates elements
         //takes relative mass, calculates the existence of minerals, subtracts the relative mass
         switch (tier)
         {
@@ -48,15 +47,39 @@ public class AsteroidProperties : MonoBehaviour
 
         //Uncomment to print out the values generated
         
-        foreach (KeyValuePair<string, double> entry in elements)
+        /*foreach (KeyValuePair<string, double> entry in elements)
         {
             Debug.Log(entry);
-        }
-        
+        }*/
 
-        //Todo: Calculate mass dependent on tier and number of elements
+ //       calculateMass(elements);
+
+        //Todo:
+        //      Calculate mass dependent on tier and number of elements
         //      Add some deviance to generated resource numbers (seeing too many of the same numbers)
     }
+
+/*    void calculateMass(Dictionary<string, double> dict) 
+    {
+        double asteroidMass = 0;
+
+        //{"DarkMatter", "Ruthenium", "Rhodium", "Palladium", "Osmium", "Iridium", "Platinum",
+        // "Iron", "Cobalt", "Nickel", "Hydrogen", "Carbon", "Nitrogen", "Oxygen"}
+        asteroidMass += dict["DarkMatter"] * ;
+        asteroidMass += dict["Ruthenium"] * ;
+        asteroidMass += dict["Rhodium"] * ;
+        asteroidMass += dict["Palladium"] * ;
+        asteroidMass += dict["Osmium"] * ;
+        asteroidMass += dict["Iridium"] * ;
+        asteroidMass += dict["Platinum"] * ;
+        asteroidMass += dict["Iron"] * ;
+        asteroidMass += dict["Cobalt"] * ;
+        asteroidMass += dict["Nickel"] * ;
+        asteroidMass += dict["Hydrogen"] * ;
+        asteroidMass += dict["Carbon"] * ;
+        asteroidMass += dict["Nitrogen"] * ;
+        asteroidMass += dict["Oxygen"] * ;
+    }*/
 
     void calculateDarkMatter(double rel, System.Random ran) {
         //takes 1/5 of the possible mass to work with
@@ -72,7 +95,7 @@ public class AsteroidProperties : MonoBehaviour
     }
 
     void calculatePlats(double rel, System.Random ran) {
-        //takes 1/5 of the possible mass to work with
+        //takes 1/3 of the possible mass to work with
         double workingMass = rel / 3;
 
         //calculates what percentage to work with, between 1/2 -> 1
@@ -103,7 +126,7 @@ public class AsteroidProperties : MonoBehaviour
 
     void calculateIndustrials(double rel, System.Random ran)
     {
-        //takes 1/5 of the possible mass to work with
+        //takes 1/1 of the possible mass to work with
         double workingMass = rel / 2;
 
         //calculates what percentage to work with, between 1/2 -> 1
@@ -135,13 +158,15 @@ public class AsteroidProperties : MonoBehaviour
         //rel is whatever remains after the others took their chunks out
 
         string[] elementArray = { "Hydrogen", "Carbon", "Nitrogen", "Oxygen" };
+        double workingMass = rel;
+
         foreach(string element in elementArray)
         {
             //doing 7/24, + or - 1/24 (halfway between 1/3 and 1/24
             double frac = 7;
             frac += ran.Next(-1, 1);
 
-            double elemMass = rel * frac / 24;
+            double elemMass = workingMass * frac / 24;
 
             frac = ((double)(10 + ran.Next(-2, 1)) / 10);
             elemMass *= frac;
