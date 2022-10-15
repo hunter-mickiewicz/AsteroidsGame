@@ -18,7 +18,13 @@ public class AsteroidProperties : MonoBehaviour
         //Instantiate random number generator
         System.Random gen = new System.Random();
         int tier = gen.Next(0,100);// (Start, stop)
-        double relMass = 100 + gen.Next(1,10);
+
+        //for testing specific tiers
+        //int tier = 99;
+        //int tier = 79;
+        //int tier = 49;
+        //int tier = 9;
+        double relMass = 100 + gen.Next(1, 10);
 
         //calculates which tier the asteroid is in, then calculates elements
         //takes relative mass, calculates the existence of minerals, subtracts the relative mass
@@ -46,40 +52,56 @@ public class AsteroidProperties : MonoBehaviour
         }
 
         //Uncomment to print out the values generated
-        
+
         /*foreach (KeyValuePair<string, double> entry in elements)
         {
             Debug.Log(entry);
         }*/
 
- //       calculateMass(elements);
+        //Mins and maxes calculated for each type:
+        //  Tier iv:  +  +  +
+        //  Tier iii:  +  +
+        //  Tier ii:   +
+        //  Tier i: 
+        double totalMass = 0;
+        for (int i = 0; i < 100000; i++)
+        {
+            totalMass += calculateMass();
+        }
+        Debug.Log("average: " + totalMass / 100000);
 
         //Todo:
         //      Calculate mass dependent on tier and number of elements
+        //          -Calculate min and max of all tiers
+        //          -implement failsafes to test for each tier (so we don't index on a nonexistent dictionary key)
         //      Add some deviance to generated resource numbers (seeing too many of the same numbers)
     }
 
-/*    void calculateMass(Dictionary<string, double> dict) 
+    double calculateMass() 
     {
         double asteroidMass = 0;
 
         //{"DarkMatter", "Ruthenium", "Rhodium", "Palladium", "Osmium", "Iridium", "Platinum",
         // "Iron", "Cobalt", "Nickel", "Hydrogen", "Carbon", "Nitrogen", "Oxygen"}
-        asteroidMass += dict["DarkMatter"] * ;
-        asteroidMass += dict["Ruthenium"] * ;
-        asteroidMass += dict["Rhodium"] * ;
-        asteroidMass += dict["Palladium"] * ;
-        asteroidMass += dict["Osmium"] * ;
-        asteroidMass += dict["Iridium"] * ;
-        asteroidMass += dict["Platinum"] * ;
-        asteroidMass += dict["Iron"] * ;
-        asteroidMass += dict["Cobalt"] * ;
-        asteroidMass += dict["Nickel"] * ;
-        asteroidMass += dict["Hydrogen"] * ;
-        asteroidMass += dict["Carbon"] * ;
-        asteroidMass += dict["Nitrogen"] * ;
-        asteroidMass += dict["Oxygen"] * ;
-    }*/
+        //Implement checks to ensure elements exist (won't need for volatiles)
+        
+        asteroidMass += elements["DarkMatter"] * 3.0;
+        asteroidMass += elements["Ruthenium"] * 1.01;
+        asteroidMass += elements["Rhodium"] * 1.03;
+        asteroidMass += elements["Palladium"] * 1.06;
+        asteroidMass += elements["Osmium"] * 1.90;
+        asteroidMass += elements["Iridium"] * 1.92;
+        asteroidMass += elements["Platinum"] * 1.95;
+        asteroidMass += elements["Iron"] * 0.56;
+        asteroidMass += elements["Cobalt"] * 0.56;
+        asteroidMass += elements["Nickel"] * 0.55;
+        asteroidMass += elements["Hydrogen"] * 0.01;
+        asteroidMass += elements["Carbon"] * 0.12;
+        asteroidMass += elements["Nitrogen"] * 0.14;
+        asteroidMass += elements["Oxygen"] * 0.15;
+
+        return asteroidMass;
+    }
 
     void calculateDarkMatter(double rel, System.Random ran) {
         //takes 1/5 of the possible mass to work with
