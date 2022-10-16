@@ -5,6 +5,7 @@ using UnityEngine;
 public class AsteroidProperties : MonoBehaviour
 {
     public Dictionary<string, double> elements = new Dictionary<string, double>();
+    public double totalWeight;
 
     // Start is called before the first frame update
     void Start()
@@ -63,12 +64,7 @@ public class AsteroidProperties : MonoBehaviour
         //  Tier iii:  +  +
         //  Tier ii:   +
         //  Tier i: 
-        double totalMass = 0;
-        for (int i = 0; i < 100000; i++)
-        {
-            totalMass += calculateMass();
-        }
-        Debug.Log("average: " + totalMass / 100000);
+        Debug.Log(totalWeight);
 
         //Todo:
         //      Calculate mass dependent on tier and number of elements
@@ -77,31 +73,6 @@ public class AsteroidProperties : MonoBehaviour
         //      Add some deviance to generated resource numbers (seeing too many of the same numbers)
     }
 
-    double calculateMass() 
-    {
-        double asteroidMass = 0;
-
-        //{"DarkMatter", "Ruthenium", "Rhodium", "Palladium", "Osmium", "Iridium", "Platinum",
-        // "Iron", "Cobalt", "Nickel", "Hydrogen", "Carbon", "Nitrogen", "Oxygen"}
-        //Implement checks to ensure elements exist (won't need for volatiles)
-        
-        asteroidMass += elements["DarkMatter"] * 3.0;
-        asteroidMass += elements["Ruthenium"] * 1.01;
-        asteroidMass += elements["Rhodium"] * 1.03;
-        asteroidMass += elements["Palladium"] * 1.06;
-        asteroidMass += elements["Osmium"] * 1.90;
-        asteroidMass += elements["Iridium"] * 1.92;
-        asteroidMass += elements["Platinum"] * 1.95;
-        asteroidMass += elements["Iron"] * 0.56;
-        asteroidMass += elements["Cobalt"] * 0.56;
-        asteroidMass += elements["Nickel"] * 0.55;
-        asteroidMass += elements["Hydrogen"] * 0.01;
-        asteroidMass += elements["Carbon"] * 0.12;
-        asteroidMass += elements["Nitrogen"] * 0.14;
-        asteroidMass += elements["Oxygen"] * 0.15;
-
-        return asteroidMass;
-    }
 
     void calculateDarkMatter(double rel, System.Random ran) {
         //takes 1/5 of the possible mass to work with
@@ -112,6 +83,8 @@ public class AsteroidProperties : MonoBehaviour
         workingMass *= percMass / 10;
         elements["DarkMatter"] = workingMass;
         rel -= workingMass;
+
+        totalWeight += workingMass * 3.0;
 
         calculatePlats(rel, ran);
     }
@@ -141,6 +114,28 @@ public class AsteroidProperties : MonoBehaviour
 
             rel -= elemMass;
             elements[element] = elemMass;
+
+            switch (element)
+            {
+                case "Ruthenium":
+                    totalWeight += elemMass * 1.01;
+                    break;
+                case "Rhodium":
+                    totalWeight += elemMass * 1.03;
+                    break;
+                case "Palladium":
+                    totalWeight += elemMass * 1.06;
+                    break;
+                case "Osmium":
+                    totalWeight += elemMass * 1.90;
+                    break;
+                case "Iridium":
+                    totalWeight += elemMass * 1.92;
+                    break;
+                case "Platinum":
+                    totalWeight += elemMass * 1.95;
+                    break;
+            }
         }
 
         calculateIndustrials(rel, ran);
@@ -170,6 +165,19 @@ public class AsteroidProperties : MonoBehaviour
 
             rel -= elemMass;
             elements[element] = elemMass;
+            
+            switch (element)
+            {
+                case "Iron":
+                    totalWeight += elemMass * 0.56;
+                    break;
+                case "Cobalt":
+                    totalWeight += elemMass * 0.56;
+                    break;
+                case "Nickel":
+                    totalWeight += elemMass * 0.55;
+                    break;
+            }
         }
 
         calculateVolatiles(rel, ran);
@@ -195,6 +203,21 @@ public class AsteroidProperties : MonoBehaviour
 
             rel -= elemMass;
             elements[element] = elemMass;
+            switch (element)
+            {
+                case "Hydrogen":
+                    totalWeight += elemMass * 0.01;
+                    break;
+                case "Carbon":
+                    totalWeight += elemMass * 0.12;
+                    break;
+                case "Nitrogen":
+                    totalWeight += elemMass * 0.14;
+                    break;
+                case "Oxygen":
+                    totalWeight += elemMass * 0.15;
+                    break;
+            }
         }
 
     }
