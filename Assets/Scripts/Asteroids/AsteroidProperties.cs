@@ -65,13 +65,9 @@ public class AsteroidProperties : MonoBehaviour
         //  Tier iii:  30.9211019, 101.50125
         //  Tier ii:   15.6449, 53.482
         //  Tier i: 8.484, 16.94
-        Debug.Log(totalWeight);
+        //Debug.Log(totalWeight);
 
-        //Todo:
-        //      Calculate mass dependent on tier and number of elements
-        //          -Calculate min and max of all tiers
-        //          -implement failsafes to test for each tier (so we don't index on a nonexistent dictionary key)
-        //      Add some deviance to generated resource numbers (seeing too many of the same numbers)
+       
     }
 
 
