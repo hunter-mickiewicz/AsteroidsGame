@@ -6,6 +6,7 @@ public class AsteroidProperties : MonoBehaviour
 {
     public Dictionary<string, double> elements = new Dictionary<string, double>();
     public double totalWeight = 0;
+    public Rigidbody2D asteroid;
 
     // Start is called before the first frame update
     void Start()
@@ -61,13 +62,16 @@ public class AsteroidProperties : MonoBehaviour
         }*/
 
         //Mins and maxes calculated for each type:
+        //      NOTE: Maybe I should half these? Not sure...
         //  Tier iv:  44.5250468, 124.351128
         //  Tier iii:  30.9211019, 101.50125
         //  Tier ii:   15.6449, 53.482
         //  Tier i: 8.484, 16.94
         //Debug.Log(totalWeight);
 
-       
+        asteroid = GetComponent<Rigidbody2D>();
+        asteroid.mass = (float)totalWeight;
+
     }
 
 
