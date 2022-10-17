@@ -5,7 +5,7 @@ using UnityEngine;
 public class AsteroidProperties : MonoBehaviour
 {
     public Dictionary<string, double> elements = new Dictionary<string, double>();
-    public double totalWeight;
+    public double totalWeight = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -25,8 +25,9 @@ public class AsteroidProperties : MonoBehaviour
         //int tier = 79;
         //int tier = 49;
         //int tier = 9;
+        
         double relMass = 100 + gen.Next(1, 10);
-
+        
         //calculates which tier the asteroid is in, then calculates elements
         //takes relative mass, calculates the existence of minerals, subtracts the relative mass
         switch (tier)
@@ -60,10 +61,10 @@ public class AsteroidProperties : MonoBehaviour
         }*/
 
         //Mins and maxes calculated for each type:
-        //  Tier iv:  +  +  +
-        //  Tier iii:  +  +
-        //  Tier ii:   +
-        //  Tier i: 
+        //  Tier iv:  44.5250468, 124.351128
+        //  Tier iii:  30.9211019, 101.50125
+        //  Tier ii:   15.6449, 53.482
+        //  Tier i: 8.484, 16.94
         Debug.Log(totalWeight);
 
         //Todo:
@@ -80,6 +81,7 @@ public class AsteroidProperties : MonoBehaviour
 
         //calculates what percentage to work with, between 1/2 -> 1
         double percMass = ran.Next(5, 10);
+
         workingMass *= percMass / 10;
         elements["DarkMatter"] = workingMass;
         rel -= workingMass;
@@ -95,7 +97,7 @@ public class AsteroidProperties : MonoBehaviour
 
         //calculates what percentage to work with, between 1/2 -> 1
         double percMass = ran.Next(5, 10);
-        workingMass *= percMass / 10;
+        workingMass *= (double)percMass / 10;
 
         string[] elementArray = {"Ruthenium", "Rhodium", "Palladium", "Osmium", "Iridium", "Platinum"};
 
@@ -143,12 +145,13 @@ public class AsteroidProperties : MonoBehaviour
 
     void calculateIndustrials(double rel, System.Random ran)
     {
-        //takes 1/1 of the possible mass to work with
+        //takes 1/2 of the possible mass to work with
         double workingMass = rel / 2;
 
         //calculates what percentage to work with, between 1/2 -> 1
         double percMass = ran.Next(5, 10);
-        workingMass *= percMass / 10;
+        workingMass *= (double)percMass / 10;
+
         string[] elementArray = { "Iron", "Cobalt", "Nickel" };
 
         foreach (string element in elementArray)
@@ -192,7 +195,7 @@ public class AsteroidProperties : MonoBehaviour
 
         foreach(string element in elementArray)
         {
-            //doing 7/24, + or - 1/24 (halfway between 1/3 and 1/24
+            //doing 7/24, + or - 1/24 (halfway between 1/3 and 1/4)
             double frac = 7;
             frac += ran.Next(-1, 1);
 
