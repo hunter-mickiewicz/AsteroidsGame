@@ -17,6 +17,8 @@ public class miner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Check distance
+        //Transfer resources from asteroid to ship
         
     }
 }
