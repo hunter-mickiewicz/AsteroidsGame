@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class miner : MonoBehaviour
 {
+    private Rigidbody2D closestAsteroid;
     // Start is called before the first frame update
 
     //IDEA FOR CLASS
@@ -19,6 +20,8 @@ public class miner : MonoBehaviour
     {
         //Check distance
         //Transfer resources from asteroid to ship
-        
+        //vector of all asteroids, find closest and check distance is within the range
+//        = GameObject.Find("Player");
+
     }
 }
