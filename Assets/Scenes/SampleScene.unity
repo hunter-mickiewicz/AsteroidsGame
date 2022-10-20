@@ -139,6 +139,7 @@ GameObject:
   - component: {fileID: 223312474}
   - component: {fileID: 223312473}
   - component: {fileID: 223312475}
+  - component: {fileID: 223312476}
   m_Layer: 0
   m_Name: Player
   m_TagString: PlayerShip
@@ -336,6 +337,18 @@ EdgeCollider2D:
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
   m_UseAdjacentEndPoint: 0
+--- !u!114 &223312476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 223312467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46357b4ff948b9e4f9f17475c5811a59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -533,7 +546,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ed1d931bab133840aafa92b21186c51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  elements: 
+  totalWeight: 0
+  asteroid: {fileID: 0}
 --- !u!1 &1514243546
 GameObject:
   m_ObjectHideFlags: 0
@@ -743,6 +757,10 @@ PrefabInstance:
       propertyPath: m_Constraints
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 6740458469258348514, guid: 15ab95617d724b0419e7f7bdeed8732f, type: 3}
+      propertyPath: m_TagString
+      value: Asteroid
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15ab95617d724b0419e7f7bdeed8732f, type: 3}
 --- !u!1001 &5600175065335010822
@@ -806,6 +824,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6740458469258348514, guid: 15ab95617d724b0419e7f7bdeed8732f, type: 3}
       propertyPath: m_Name
+      value: Asteroid
+      objectReference: {fileID: 0}
+    - target: {fileID: 6740458469258348514, guid: 15ab95617d724b0419e7f7bdeed8732f, type: 3}
+      propertyPath: m_TagString
       value: Asteroid
       objectReference: {fileID: 0}
     m_RemovedComponents: []

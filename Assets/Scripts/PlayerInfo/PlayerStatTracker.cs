@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerStatTracker : MonoBehaviour
 {
+    //Want to add storage for each element type (maybe split up into tiers?)
     public int health = 1000;
 
     // Start is called before the first frame update
