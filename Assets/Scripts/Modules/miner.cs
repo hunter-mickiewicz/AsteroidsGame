@@ -9,8 +9,8 @@ public class miner : MonoBehaviour
     private float closest = 0;
     private GameObject[] asteroids;
     private GameObject playerShip;
-    private double miningSpeed = 0.01f;
-    private System.Random gen;
+    private double miningSpeed = 0.015625;
+    System.Random gen = new System.Random();
 
     //determines which elements can be mined
     //private int miningTier = 4;
@@ -30,8 +30,8 @@ public class miner : MonoBehaviour
     {
         asteroids = GameObject.FindGameObjectsWithTag("Asteroid");
         playerShip = GameObject.Find("Player");
+        storage = playerShip.GetComponent<PlayerStatTracker>().storage;
 
-        System.Random gen = new System.Random();
     }
 
     // Update is called once per frame
@@ -65,6 +65,7 @@ public class miner : MonoBehaviour
                 }
             }
 
+
         }
 
         if (Input.GetKey(KeyCode.M)) 
@@ -72,17 +73,10 @@ public class miner : MonoBehaviour
             //Maybe have a preference setting for which elements to mine first, or at all?
             //This might be only with a higher tier of miner (or an upgrade), standard just gives random
 
-            //Keeping this instantiated dictionary as well as original:
-            //  instance removes no longer needed entries, original still tracks values
-            Dictionary<string, double> elements = closestAsteroid.GetComponent<AsteroidProperties>().elements;
 
-            foreach (var element in elements)
-            {
-                if(element.Value == 0)
-                {
-                    elements.Remove(element.Key);
-                }
-            }
+
+            //Need distance setting here...
+            Dictionary<string, double> elements = closestAsteroid.GetComponent<AsteroidProperties>().elements;
 
             int numElem = elements.Count - 1;
 
@@ -93,12 +87,13 @@ public class miner : MonoBehaviour
             if(element.Value < 1.0)
             {
                 storage[element.Key] += element.Value;
-                closestAsteroid.GetComponent<AsteroidProperties>().elements[element.Key] -= element.Value;
+                elements[element.Key] -= element.Value;
+                elements.Remove(element.Key);
             }
             else
             {
                 storage[element.Key] += miningSpeed;
-                closestAsteroid.GetComponent<AsteroidProperties>().elements[element.Key] -= miningSpeed;
+                elements[element.Key] -= miningSpeed;
             }
 
             //Transfer elements somehow
@@ -112,6 +107,11 @@ public class miner : MonoBehaviour
         {
             closestAsteroid = null;
             closest = 0;
+
+            foreach(var elem in storage)
+            {
+                Debug.Log(elem.Key + ": " + elem.Value);
+            }
         }
     }
 }
