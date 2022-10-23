@@ -3,7 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class miner : MonoBehaviour
+public class minerMod : MonoBehaviour
 {
     private GameObject closestAsteroid = null;
     private float closest = 0;
@@ -50,17 +50,17 @@ public class miner : MonoBehaviour
         //        = GameObject.Find("Player");
 
         //Do two things--on key up, release the object so we can test for distance on key down.
-           
+
         //Called once no matter how long held
-        if (Input.GetKeyDown(KeyCode.M)) 
+        if (Input.GetKeyDown(KeyCode.M))
         {
 
             //Establishes closest asteroid
-            foreach(GameObject ast in asteroids)
+            foreach (GameObject ast in asteroids)
             {
                 Rigidbody2D currAst = ast.GetComponent<Rigidbody2D>();
                 var dist = (currAst.position - new Vector2(playerShip.transform.position.x, playerShip.transform.position.y)).sqrMagnitude;
-                if(closestAsteroid == null)
+                if (closestAsteroid == null)
                 {
                     closestAsteroid = ast;
                     closest = dist;
