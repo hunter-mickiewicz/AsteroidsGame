@@ -5,7 +5,7 @@ using UnityEngine;
 public class boosterMod : MonoBehaviour
 {
     public Rigidbody2D ship;
-    public float boostThrust = 20f;
+    public float boostThrust = 50f;
 
     // Start is called before the first frame update
     void Start()

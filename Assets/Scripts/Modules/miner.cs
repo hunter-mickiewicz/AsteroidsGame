@@ -11,6 +11,7 @@ public class miner : MonoBehaviour
     private GameObject playerShip;
     private double miningSpeed = 0.015625;
     System.Random gen = new System.Random();
+    private bool validMine;
 
     //determines which elements can be mined
     //private int miningTier = 4;
@@ -22,6 +23,12 @@ public class miner : MonoBehaviour
     Dictionary<string, double> storage;
 
     // Start is called before the first frame update
+
+
+    //FUNCTIONALITY:
+    //Hold M to mine. Only works within distance
+    //If outside of distance at any point, auto fails and must reattempt.
+
 
     //IDEA FOR CLASS
     //mod added to attached rigidbody allows the attached thing to mine asteroid (within a certain range, start with minimal range)
@@ -65,10 +72,16 @@ public class miner : MonoBehaviour
                 }
             }
 
+            testDist();
+            if (!validMine)
+            {
+                //Player is starting too far away
+                Debug.Log("Initial attempt too far away.");
+            }
 
         }
 
-        if (Input.GetKey(KeyCode.M)) 
+        if (Input.GetKey(KeyCode.M))
         {
             //Maybe have a preference setting for which elements to mine first, or at all?
             //This might be only with a higher tier of miner (or an upgrade), standard just gives random
@@ -84,34 +97,52 @@ public class miner : MonoBehaviour
 
             KeyValuePair<string, double> element = elements.ElementAt(nextElem);
 
-            if(element.Value < 1.0)
+            if (validMine)
             {
-                storage[element.Key] += element.Value;
-                elements[element.Key] -= element.Value;
-                elements.Remove(element.Key);
+                testDist();
+                if (validMine)
+                {
+
+
+                    if (element.Value < 1.0)
+                    {
+                        storage[element.Key] += element.Value;
+                        elements[element.Key] -= element.Value;
+                        elements.Remove(element.Key);
+                    }
+                    else
+                    {
+                        storage[element.Key] += miningSpeed;
+                        elements[element.Key] -= miningSpeed;
+                    }
+                }
+                else
+                {
+                    //Outside of range, player moved away
+                    Debug.Log("Outside of range! Get closer and try again.");
+                }
             }
-            else
-            {
-                storage[element.Key] += miningSpeed;
-                elements[element.Key] -= miningSpeed;
-            }
-
-            //Transfer elements somehow
-
-
-            //randomly pick one. Check if it's 0, if so, remove from dictionary
-            
         }
 
         if (Input.GetKeyUp(KeyCode.M))
         {
             closestAsteroid = null;
             closest = 0;
+        }
+    }
 
-            foreach(var elem in storage)
-            {
-                Debug.Log(elem.Key + ": " + elem.Value);
-            }
+    void testDist()
+    {
+
+        var dist = (closestAsteroid.GetComponent<Rigidbody2D>().position - new Vector2(playerShip.transform.position.x, playerShip.transform.position.y)).sqrMagnitude;
+
+        if (dist < 0.7)
+        {
+            validMine = true;
+        }
+        else
+        {
+            validMine = false;
         }
     }
 }
