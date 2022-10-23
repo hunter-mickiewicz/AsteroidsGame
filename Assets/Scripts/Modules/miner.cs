@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,10 +9,17 @@ public class miner : MonoBehaviour
     private float closest = 0;
     private GameObject[] asteroids;
     private GameObject playerShip;
-    private float miningSpeed = 0.01f;
-    
+    private double miningSpeed = 0.01f;
+    private System.Random gen;
+
+    //determines which elements can be mined
+    //private int miningTier = 4;
+
     //This will be pulled directly from player
+    //Likely another dictionary,
+    //assumption: keys exist for all element types
     //private float capacity;
+    Dictionary<string, double> storage;
 
     // Start is called before the first frame update
 
@@ -23,6 +31,7 @@ public class miner : MonoBehaviour
         asteroids = GameObject.FindGameObjectsWithTag("Asteroid");
         playerShip = GameObject.Find("Player");
 
+        System.Random gen = new System.Random();
     }
 
     // Update is called once per frame
@@ -56,19 +65,46 @@ public class miner : MonoBehaviour
                 }
             }
 
-            //transfer (at a specific rate)
-
         }
 
         if (Input.GetKey(KeyCode.M)) 
         {
+            //Maybe have a preference setting for which elements to mine first, or at all?
+            //This might be only with a higher tier of miner (or an upgrade), standard just gives random
+
+            //Keeping this instantiated dictionary as well as original:
+            //  instance removes no longer needed entries, original still tracks values
             Dictionary<string, double> elements = closestAsteroid.GetComponent<AsteroidProperties>().elements;
-            
-            //Transfer elements somehow
-            foreach(var element in elements)
+
+            foreach (var element in elements)
             {
-                Debug.Log(element);
+                if(element.Value == 0)
+                {
+                    elements.Remove(element.Key);
+                }
             }
+
+            int numElem = elements.Count - 1;
+
+            int nextElem = gen.Next(0, numElem);
+
+            KeyValuePair<string, double> element = elements.ElementAt(nextElem);
+
+            if(element.Value < 1.0)
+            {
+                storage[element.Key] += element.Value;
+                closestAsteroid.GetComponent<AsteroidProperties>().elements[element.Key] -= element.Value;
+            }
+            else
+            {
+                storage[element.Key] += miningSpeed;
+                closestAsteroid.GetComponent<AsteroidProperties>().elements[element.Key] -= miningSpeed;
+            }
+
+            //Transfer elements somehow
+
+
+            //randomly pick one. Check if it's 0, if so, remove from dictionary
             
         }
 
