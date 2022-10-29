@@ -7,6 +7,7 @@ public class AsteroidProperties : MonoBehaviour
     public Dictionary<string, double> elements = new Dictionary<string, double>();
     public double totalWeight = 0;
     public Rigidbody2D asteroid;
+    public int weightModifier = 2;
 
     // Start is called before the first frame update
     void Start()
@@ -19,10 +20,10 @@ public class AsteroidProperties : MonoBehaviour
         */
         //Instantiate random number generator
         System.Random gen = new System.Random();
-        int tier = gen.Next(0,100);// (Start, stop)
+        //int tier = gen.Next(0,100);// (Start, stop)
 
         //for testing specific tiers
-        //int tier = 99;
+        int tier = 99;
         //int tier = 79;
         //int tier = 49;
         //int tier = 9;
@@ -69,6 +70,7 @@ public class AsteroidProperties : MonoBehaviour
         //  Tier i: 8.484, 16.94
         //Debug.Log(totalWeight);
 
+
         asteroid = GetComponent<Rigidbody2D>();
         asteroid.mass = (float)totalWeight;
 
@@ -77,7 +79,7 @@ public class AsteroidProperties : MonoBehaviour
 
     void calculateDarkMatter(double rel, System.Random ran) {
         //takes 1/5 of the possible mass to work with
-        double workingMass = rel / 10;
+        double workingMass = rel / 10 / weightModifier;
 
         //calculates what percentage to work with, between 1/2 -> 1
         double percMass = ran.Next(5, 10);
@@ -109,7 +111,7 @@ public class AsteroidProperties : MonoBehaviour
             frac += ran.Next(0, 2);
 
             //takes a random chunk out of working mass, assigns in dictionary
-            double elemMass = workingMass / frac;
+            double elemMass = workingMass / frac / weightModifier;
 
             frac = ((double)(10 + ran.Next(-2, 1)) / 10);
             elemMass *= frac;
@@ -161,7 +163,7 @@ public class AsteroidProperties : MonoBehaviour
             frac += ran.Next(0, 2);
 
             //takes a random chunk out of working mass, assigns in dictionary
-            double elemMass = workingMass / frac;
+            double elemMass = workingMass / frac / weightModifier;
 
             frac = ((double)(10 + ran.Next(-2, 1)) / 10);
             elemMass *= frac;
@@ -199,7 +201,7 @@ public class AsteroidProperties : MonoBehaviour
             double frac = 7;
             frac += ran.Next(-1, 1);
 
-            double elemMass = workingMass * frac / 24;
+            double elemMass = workingMass * frac / 24 / weightModifier;
 
             frac = ((double)(10 + ran.Next(-2, 1)) / 10);
             elemMass *= frac;

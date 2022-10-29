@@ -35,7 +35,7 @@ public class minerMod : MonoBehaviour
     //  rudimentary test shows we likely need to be <0.6 distance
     void Start()
     {
-        asteroids = GameObject.FindGameObjectsWithTag("Asteroid");
+        //asteroids = GameObject.FindGameObjectsWithTag("Asteroid");
         playerShip = GameObject.Find("Player");
         storage = playerShip.GetComponent<PlayerStatTracker>().storage;
 
@@ -56,7 +56,8 @@ public class minerMod : MonoBehaviour
         {
 
             //Establishes closest asteroid
-            foreach (GameObject ast in asteroids)
+            closestAsteroid = getClosestAsteroid();
+            /*foreach (GameObject ast in asteroids)
             {
                 Rigidbody2D currAst = ast.GetComponent<Rigidbody2D>();
                 var dist = (currAst.position - new Vector2(playerShip.transform.position.x, playerShip.transform.position.y)).sqrMagnitude;
@@ -70,7 +71,7 @@ public class minerMod : MonoBehaviour
                     closestAsteroid = ast;
                     closest = dist;
                 }
-            }
+            }*/
 
             testDist();
             if (!validMine)
@@ -144,5 +145,30 @@ public class minerMod : MonoBehaviour
         {
             validMine = false;
         }
+    }
+
+    public GameObject getClosestAsteroid()
+    {
+        GameObject[] asteroids = GameObject.FindGameObjectsWithTag("Asteroid");
+        GameObject playerShip = GameObject.Find("Player");
+        GameObject closestAsteroid = null;
+
+        foreach (GameObject ast in asteroids)
+        {
+            Rigidbody2D currAst = ast.GetComponent<Rigidbody2D>();
+            var dist = (currAst.position - new Vector2(playerShip.transform.position.x, playerShip.transform.position.y)).sqrMagnitude;
+            if (closestAsteroid == null)
+            {
+                closestAsteroid = ast;
+                closest = dist;
+            }
+            else if (dist < closest)
+            {
+                closestAsteroid = ast;
+                closest = dist;
+            }
+        }
+
+        return closestAsteroid;
     }
 }

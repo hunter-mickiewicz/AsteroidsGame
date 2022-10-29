@@ -137,9 +137,8 @@ GameObject:
   - component: {fileID: 223312471}
   - component: {fileID: 223312472}
   - component: {fileID: 223312474}
-  - component: {fileID: 223312473}
   - component: {fileID: 223312475}
-  - component: {fileID: 223312476}
+  - component: {fileID: 223312473}
   m_Layer: 0
   m_Name: Player
   m_TagString: PlayerShip
@@ -298,10 +297,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 223312467}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0e5e11ed94e4824287f7081201d670f, type: 3}
+  m_Script: {fileID: 11500000, guid: 2cc45d2a577b8bd49a240422768254f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 1000
 --- !u!114 &223312474
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -337,18 +335,6 @@ EdgeCollider2D:
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
   m_UseAdjacentEndPoint: 0
---- !u!114 &223312476
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 223312467}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 46357b4ff948b9e4f9f17475c5811a59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
