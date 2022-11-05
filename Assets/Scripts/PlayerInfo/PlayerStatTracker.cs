@@ -18,7 +18,6 @@ public class PlayerStatTracker : MonoBehaviour
         {
             storage[element] = 0;
         }
-        Debug.Log(typeof(string).Assembly.ImageRuntimeVersion);
 
 
     }

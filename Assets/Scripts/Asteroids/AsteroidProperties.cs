@@ -20,10 +20,10 @@ public class AsteroidProperties : MonoBehaviour
         */
         //Instantiate random number generator
         System.Random gen = new System.Random();
-        //int tier = gen.Next(0,100);// (Start, stop)
+        int tier = gen.Next(0,100);// (Start, stop)
 
         //for testing specific tiers
-        int tier = 99;
+        //int tier = 99;
         //int tier = 79;
         //int tier = 49;
         //int tier = 9;
