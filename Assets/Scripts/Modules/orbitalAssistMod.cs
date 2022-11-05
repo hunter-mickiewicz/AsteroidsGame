@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,26 +9,65 @@ public class orbitalAssistMod : MonoBehaviour
     //First thought is the code can take into account current velocity and attempt to make an elliptical orbit based on that.
     //Further velocity changes may change the elliptical nature.
     //find some way to calculate the apses? The velocity/distance at the farthest and closest point of the orbit. Once they match, should be good?
-    public float closest;
+
+    private GameObject playerShip = null; 
+    private Rigidbody2D asteroid = null;
+    private bool orbiting = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        playerShip = GameObject.Find("Player");
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        //Test forcing the velocity (manually setting it).
+        //If that works, try incremental changes using thrusters 
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+
+            //checks if the ship is currently orbiting
+            if (!orbiting) {
+                asteroid = getClosestAsteroid().GetComponent<Rigidbody2D>();
+
+                //gets the direction and distance between ship and asteroid
+                var dir = asteroid.position - new Vector2(playerShip.transform.position.x, playerShip.transform.position.y);
+                var dist2 = dir.sqrMagnitude;
+
+                //checks to see if there is actually gravitational attraction between ship and asteroid
+                if (dist2 <= playerShip.GetComponent<PlayerStatTracker>().astGravitationalDist)
+                {
+                    //gets the magnitude of gravitational force
+
+                    //For eliptical orbits
+                    float velocity = (float)Math.Sqrt(playerShip.GetComponent<Rigidbody2D>().mass + asteroid.GetComponent<Rigidbody2D>().mass * (2 / dist2) - (1 / dist2));
+                    
+                    //for circular orbits
+                    //float velocity = (float)Math.Sqrt((float)((playerShip.GetComponent<Rigidbody2D>().mass + asteroid.GetComponent<Rigidbody2D>().mass) / dist2));
+                    //float velocity = (float)((Math.Sqrt(playerShip.GetComponent<Rigidbody2D>().mass + asteroid.GetComponent<Rigidbody2D>().mass) / dist2));
+                    Debug.Log(velocity);
+
+                    //Need the sin/cos of the ANGLE, not the velocity
+                    double angle = 0 * Math.PI / 180;
+                    playerShip.GetComponent<Rigidbody2D>().velocity = new Vector2((float)(velocity * Math.Cos(angle)), (float)(velocity * Math.Sin(angle)));
+                }
+            }
+            else
+            {
+
+            }
+        }
+
     }
 
     //Returns the GameObject asteroid which is the closest to the player.
     public GameObject getClosestAsteroid()
     {
         GameObject[] asteroids = GameObject.FindGameObjectsWithTag("Asteroid");
-        GameObject playerShip = GameObject.Find("Player");
         GameObject closestAsteroid = null;
+        float closest = 0;
 
         foreach (GameObject ast in asteroids)
         {

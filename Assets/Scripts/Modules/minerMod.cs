@@ -57,21 +57,6 @@ public class minerMod : MonoBehaviour
 
             //Establishes closest asteroid
             closestAsteroid = getClosestAsteroid();
-            /*foreach (GameObject ast in asteroids)
-            {
-                Rigidbody2D currAst = ast.GetComponent<Rigidbody2D>();
-                var dist = (currAst.position - new Vector2(playerShip.transform.position.x, playerShip.transform.position.y)).sqrMagnitude;
-                if (closestAsteroid == null)
-                {
-                    closestAsteroid = ast;
-                    closest = dist;
-                }
-                else if (dist < closest)
-                {
-                    closestAsteroid = ast;
-                    closest = dist;
-                }
-            }*/
 
             testDist();
             if (!validMine)

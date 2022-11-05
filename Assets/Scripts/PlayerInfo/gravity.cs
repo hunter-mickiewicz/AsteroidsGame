@@ -27,7 +27,7 @@ public class gravity : MonoBehaviour
         var dist2 = dir.sqrMagnitude; // get the squared distance
 
         //Only have gravity affect it if it's close enough (need an in-universe explanation here)
-        if (dist2 < 20)
+        if (dist2 < playerShip.GetComponent<PlayerStatTracker>().astGravitationalDist)
         {
             // calculate the force intensity using Newton's law
             var gForce = g * playerShip.GetComponent<Rigidbody2D>().mass * currAsteroid.GetComponent<Rigidbody2D>().mass / dist2;

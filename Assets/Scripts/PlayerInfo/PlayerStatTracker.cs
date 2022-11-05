@@ -7,6 +7,7 @@ public class PlayerStatTracker : MonoBehaviour
     //Want to add storage for each element type (maybe split up into tiers?)
     public int health = 1000;
     public Dictionary<string, double> storage = new Dictionary<string, double>();
+    public int astGravitationalDist = 30;
 
     // Start is called before the first frame update
     void Start()
