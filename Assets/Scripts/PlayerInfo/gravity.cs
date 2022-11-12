@@ -24,17 +24,16 @@ public class gravity : MonoBehaviour
         var resForce = Vector2.zero;
         var dir = currAsteroid.position - new Vector2(playerShip.transform.position.x, playerShip.transform.position.y); // get the force direction
         
-        var dist2 = dir.sqrMagnitude; // get the squared distance
+        float dist2 = dir.sqrMagnitude; // get the squared distance
 
         //Only have gravity affect it if it's close enough (need an in-universe explanation here)
         if (dist2 < playerShip.GetComponent<PlayerStatTracker>().astGravitationalDist)
         {
             // calculate the force intensity using Newton's law
-            var gForce = g * playerShip.GetComponent<Rigidbody2D>().mass * currAsteroid.GetComponent<Rigidbody2D>().mass / dist2;
+            float gForce = (float)(playerShip.GetComponent<Rigidbody2D>().mass * currAsteroid.GetComponent<Rigidbody2D>().mass / dist2);
             resForce += gForce * dir.normalized; // accumulate in the resulting force variable
 
             playerShip.GetComponent<Rigidbody2D>().AddForce(resForce);
-            currAsteroid.AddForce(-resForce);
         }
     }
 }
