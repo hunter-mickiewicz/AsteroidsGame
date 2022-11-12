@@ -113,7 +113,13 @@ public class minerMod : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.M))
         {
             closestAsteroid = null;
-            closest = 0;
+            closest = 0; 
+            
+            //Uncomment lines to test value of storage items
+            /*foreach(var item in storage)
+            {
+                Debug.Log(item);
+            }*/
         }
     }
 

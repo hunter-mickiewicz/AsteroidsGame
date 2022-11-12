@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
     public float vertInput;
     public float horInput;
     public float turnSpeed = 3.0f;
-    public float engineThrust = 5f;
+    public float engineThrust = 0.125f;
     public Vector3 totalVelocity = new Vector3(0, 0, 0);
 
     // Start is called before the first frame update
