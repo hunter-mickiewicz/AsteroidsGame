@@ -73,7 +73,6 @@ public class AsteroidProperties : MonoBehaviour
 
         asteroid = GetComponent<Rigidbody2D>();
         asteroid.mass = (float)totalWeight;
-        Debug.Log(asteroid.mass);
 
     }
 
