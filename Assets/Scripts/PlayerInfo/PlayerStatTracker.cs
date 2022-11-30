@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class PlayerStatTracker : MonoBehaviour
 {
-    //Want to add storage for each element type (maybe split up into tiers?)
+
     public int health = 1000;
-    public Dictionary<string, double> storage = new Dictionary<string, double>();
+    //Storage for elements. first item in array is the amount in storage, second is the limit
+    public Dictionary<string, double[]> storage = new Dictionary<string, double[]>();
     public int astGravitationalDist = 20;
 
     // Start is called before the first frame update
@@ -17,9 +18,9 @@ public class PlayerStatTracker : MonoBehaviour
             
         foreach(string element in elements)
         {
-            storage[element] = 0;
+            storage[element][0] = 0;
         }
-
+        
 
     }
 

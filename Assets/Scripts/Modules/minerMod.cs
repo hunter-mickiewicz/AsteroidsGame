@@ -20,7 +20,7 @@ public class minerMod : MonoBehaviour
     //Likely another dictionary,
     //assumption: keys exist for all element types
     //private float capacity;
-    Dictionary<string, double> storage;
+    Dictionary<string, double[]> storage;
 
     // Start is called before the first frame update
 
@@ -92,13 +92,13 @@ public class minerMod : MonoBehaviour
 
                     if (element.Value < 1.0)
                     {
-                        storage[element.Key] += element.Value;
+                        storage[element.Key][0] += element.Value;
                         elements[element.Key] -= element.Value;
                         elements.Remove(element.Key);
                     }
                     else
                     {
-                        storage[element.Key] += miningSpeed;
+                        storage[element.Key][0] += miningSpeed;
                         elements[element.Key] -= miningSpeed;
                     }
                 }
