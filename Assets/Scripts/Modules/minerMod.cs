@@ -167,10 +167,10 @@ public class minerMod : MonoBehaviour
             closest = 0; 
             
             //Uncomment lines to test value of storage items
-            /*foreach(var item in storage)
+            foreach(var item in storage)
             {
                 Debug.Log(item.Key + item.Value[0]);
-            }*/
+            }
         }
     }
 

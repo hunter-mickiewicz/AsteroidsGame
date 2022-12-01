@@ -7,7 +7,7 @@ public class PlayerStatTracker : MonoBehaviour
 
     public int health = 1000;
     //Storage for elements. first item in array is the amount in storage, second is the limit
-    internal Dictionary<string, double[]> storage = new Dictionary<string, double[]>();
+    public Dictionary<string, double[]> storage = new Dictionary<string, double[]>();
 
     public int astGravitationalDist = 20;
     public double initialLimit = 5;
@@ -21,7 +21,6 @@ public class PlayerStatTracker : MonoBehaviour
         foreach(string element in elements)
         {
             storage[element] = new double[] {0.0, initialLimit};
-            //storage[element][1] = initialLimit;
         }
         
 
@@ -39,4 +38,5 @@ public class PlayerStatTracker : MonoBehaviour
     {
         return storage[item][1] - storage[item][0];
     }
+
 }
