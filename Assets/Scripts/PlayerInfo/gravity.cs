@@ -41,7 +41,7 @@ public class gravity : MonoBehaviour
     {
         //Placeholder -- actual damage should be a function of gravity (higher g force, more damage)
         //Also, if there is a landing module on the ship (and it's oriented correctly) there is no damage taken
-        if(ship.GetComponent<landingGear>() != null && ship.GetComponent<landingGear>().validLanding != true)
+        if (ship.GetComponent<landingGear>() == null || ship.GetComponent<landingGear>().validLanding != true)
         {
             ship.GetComponent<DamageTracker>().updateDamage(1);
         }

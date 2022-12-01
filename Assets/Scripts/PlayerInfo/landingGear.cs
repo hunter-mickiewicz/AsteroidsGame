@@ -24,6 +24,7 @@ public class landingGear : MonoBehaviour
     {
         if(other.name == "Asteroid")
         {
+            //Calculates the angle between the objects, and the angle of the ship to make sure they're similiar
             Rigidbody2D ast = other.GetComponent<Rigidbody2D>();
             var resForce = Vector2.zero;
             var dir = ast.position - new Vector2(gameObject.transform.position.x, gameObject.transform.position.y); // get the force direction
@@ -31,7 +32,6 @@ public class landingGear : MonoBehaviour
 
             float directionPointed = gameObject.GetComponent<Rigidbody2D>().rotation;
             float totalAngle = Math.Abs(directionPointed - angleBetween);
-            Debug.Log(totalAngle);
 
             validLanding = totalAngle <= 15? true : false;
         }
