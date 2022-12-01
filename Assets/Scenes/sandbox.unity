@@ -146,6 +146,14 @@ PrefabInstance:
       propertyPath: m_CollisionDetection
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 423268852470382958, guid: 8ea6cfc0cd499204eaf6699786c51f45, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 8d5f697c999643441bb417d834c597de, type: 3}
+    - target: {fileID: 423268852470382958, guid: 8ea6cfc0cd499204eaf6699786c51f45, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8779c962636b1694280e3c19e3d9b000, type: 2}
     - target: {fileID: 423268852470382959, guid: 8ea6cfc0cd499204eaf6699786c51f45, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -189,6 +197,14 @@ PrefabInstance:
     - target: {fileID: 423268852470382959, guid: 8ea6cfc0cd499204eaf6699786c51f45, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 5361500978609059919, guid: 8ea6cfc0cd499204eaf6699786c51f45, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8917597113498799415, guid: 8ea6cfc0cd499204eaf6699786c51f45, type: 3}
+      propertyPath: health
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 8917597113498799415, guid: 8ea6cfc0cd499204eaf6699786c51f45, type: 3}
       propertyPath: initialLimit
@@ -328,6 +344,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8874493802895518444, guid: 15ab95617d724b0419e7f7bdeed8732f, type: 3}
       propertyPath: m_CollisionDetection
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8874493802895518445, guid: 15ab95617d724b0419e7f7bdeed8732f, type: 3}
+      propertyPath: m_IsTrigger
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8874493802895518446, guid: 15ab95617d724b0419e7f7bdeed8732f, type: 3}
@@ -511,11 +531,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 588144626}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56e92cf8f2044db4ea31cc58a6b7d02d, type: 3}
+  m_Script: {fileID: 11500000, guid: 197ef3a2bad1847459710c9ef869bc22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ship: {fileID: 0}
-  boostThrust: 50
 --- !u!1 &1163741100 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 423268852470382947, guid: 8ea6cfc0cd499204eaf6699786c51f45, type: 3}
@@ -533,6 +551,56 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cc45d2a577b8bd49a240422768254f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1163741115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1163741100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a97070ee2af68234ea6dca62b620ea4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathSprite: {fileID: 21300000, guid: d30a353fc5e62e445b58e341d953d45e, type: 3}
+  health: 0
+--- !u!60 &1163741116
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1163741100}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.31, y: 0.48}
+    newSize: {x: 0.31, y: 0.48}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.065, y: 0.17999999}
+      - {x: 0.024999999, y: 0.24}
+      - {x: -0.055, y: 0.24}
+      - {x: -0.155, y: 0.01}
+      - {x: -0.155, y: -0.17}
+      - {x: -0.114999995, y: -0.21}
+      - {x: -0.044999998, y: -0.24}
+      - {x: 0.065, y: -0.24}
+      - {x: 0.13499999, y: -0.22999999}
+      - {x: 0.155, y: -0.19}
+      - {x: 0.155, y: 0.03}
 --- !u!1001 &5694551029330111186
 PrefabInstance:
   m_ObjectHideFlags: 0

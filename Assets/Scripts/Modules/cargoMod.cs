@@ -9,8 +9,12 @@ public class cargoMod : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        //Ensures the mod is attached to the player
         if(CompareTag("Player"))
         {
+
+            //Goes through storage and upgrades each item (this can be done specifically for tiers or items if wanted
             Dictionary<string, double[]> storage = GetComponent<PlayerStatTracker>().storage;
             foreach(var item in storage)
             {

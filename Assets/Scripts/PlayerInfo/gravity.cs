@@ -38,4 +38,11 @@ public class gravity : MonoBehaviour
             playerShip.GetComponent<Rigidbody2D>().AddForce(resForce);
         }
     }
+
+    void OnTriggerStay2D(Collider2D ship)
+    {
+        //Placeholder -- actual damage should be a function of gravity (higher g force, more damage)
+        //Also, if there is a landing module on the ship (and it's oriented correctly) there is no damage taken
+        ship.GetComponent<DamageTracker>().updateDamage(1);
+    }
 }

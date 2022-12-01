@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerStatTracker : MonoBehaviour
 {
 
-    public int health = 1000;
+    public double health = 100;
     //Storage for elements. first item in array is the amount in storage, second is the limit
     public Dictionary<string, double[]> storage = new Dictionary<string, double[]>();
 
