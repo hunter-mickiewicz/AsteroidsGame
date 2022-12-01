@@ -19,9 +19,7 @@ public class gravity : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {    
-        //If the ship and asteroid collide, it glitches hard. How can I fix this?
-
+    { 
         var resForce = Vector2.zero;
         var dir = currAsteroid.position - new Vector2(playerShip.transform.position.x, playerShip.transform.position.y); // get the force direction
         
@@ -43,6 +41,9 @@ public class gravity : MonoBehaviour
     {
         //Placeholder -- actual damage should be a function of gravity (higher g force, more damage)
         //Also, if there is a landing module on the ship (and it's oriented correctly) there is no damage taken
-        ship.GetComponent<DamageTracker>().updateDamage(1);
+        if(ship.GetComponent<landingGear>() != null && ship.GetComponent<landingGear>().validLanding != true)
+        {
+            ship.GetComponent<DamageTracker>().updateDamage(1);
+        }
     }
 }
