@@ -7,7 +7,7 @@ public class AsteroidProperties : MonoBehaviour
     public Dictionary<string, double> elements = new Dictionary<string, double>();
     public double totalWeight = 0;
     public Rigidbody2D asteroid;
-    public int weightModifier = 2;
+    public int weightModifier = 4;
 
     // Start is called before the first frame update
     void Start()
@@ -73,6 +73,11 @@ public class AsteroidProperties : MonoBehaviour
 
         asteroid = GetComponent<Rigidbody2D>();
         asteroid.mass = (float)totalWeight;
+
+        /*foreach(var element in elements)
+        {
+            Debug.Log(element.Key + " " + element.Value);
+        }*/
 
     }
 

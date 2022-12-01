@@ -7,8 +7,10 @@ public class PlayerStatTracker : MonoBehaviour
 
     public int health = 1000;
     //Storage for elements. first item in array is the amount in storage, second is the limit
-    public Dictionary<string, double[]> storage = new Dictionary<string, double[]>();
+    internal Dictionary<string, double[]> storage = new Dictionary<string, double[]>();
+
     public int astGravitationalDist = 20;
+    public double initialLimit = 5;
 
     // Start is called before the first frame update
     void Start()
@@ -18,7 +20,8 @@ public class PlayerStatTracker : MonoBehaviour
             
         foreach(string element in elements)
         {
-            storage[element][0] = 0;
+            storage[element] = new double[] {0.0, initialLimit};
+            //storage[element][1] = initialLimit;
         }
         
 
@@ -28,5 +31,12 @@ public class PlayerStatTracker : MonoBehaviour
     void Update()
     {
         
+    }
+
+
+    //Returns the remaining capacity for a certain element
+    public double GetRemainingCapacity(string item) 
+    {
+        return storage[item][1] - storage[item][0];
     }
 }

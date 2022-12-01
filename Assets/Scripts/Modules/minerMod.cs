@@ -16,10 +16,8 @@ public class minerMod : MonoBehaviour
     //determines which elements can be mined
     //private int miningTier = 4;
 
-    //This will be pulled directly from player
-    //Likely another dictionary,
+
     //assumption: keys exist for all element types
-    //private float capacity;
     Dictionary<string, double[]> storage;
 
     // Start is called before the first frame update
@@ -69,7 +67,7 @@ public class minerMod : MonoBehaviour
 
         if (Input.GetKey(KeyCode.M))
         {
-            //Maybe have a preference setting for which elements to mine first, or at all?
+            //Maybe have a preference setting for which elements to mine first, or at all (eventual)?
             //This might be only with a higher tier of miner (or an upgrade), standard just gives random
 
 
@@ -77,29 +75,82 @@ public class minerMod : MonoBehaviour
             //Need distance setting here...
             Dictionary<string, double> elements = closestAsteroid.GetComponent<AsteroidProperties>().elements;
 
-            int numElem = elements.Count - 1;
-
-            int nextElem = gen.Next(0, numElem);
-
-            KeyValuePair<string, double> element = elements.ElementAt(nextElem);
-
+            //Tests if we're initially in range, then again if we pull out of range during the mining
             if (validMine)
             {
+                if (elements.Count == 0)
+                {
+                    Debug.Log("Asteroid is fully mined!");
+                    validMine = false;
+                    return;
+                }
+
+                int numElem = elements.Count;
+
+                int nextElem;// = gen.Next(0, numElem);
+                KeyValuePair<string, double> element;// = elements.ElementAt(nextElem);
+                double remainder;
+
+                //These next two blocks ensure we don't enter an infinite loop.
+                //If I add in storage tiers (or mining tiers even) I will need to adjust accordingly.
+                int cargoSpace = 0;
+                foreach(var item in storage)
+                {
+                    if(playerShip.GetComponent<PlayerStatTracker>().GetRemainingCapacity(item.Key) != 0 && elements.ContainsKey(item.Key))
+                    {
+                        cargoSpace++;
+                    }
+                }
+
+                if (cargoSpace == 0)
+                {
+                    Debug.Log("All storage capacity full!");
+                    validMine = false;
+                    return;
+                }
+
+                do
+                {
+                    nextElem = gen.Next(0, numElem);
+                    element = elements.ElementAt(nextElem);
+
+                    //pulls the remaining capacity for the current element from player
+                    remainder = playerShip.GetComponent<PlayerStatTracker>().GetRemainingCapacity(element.Key);
+
+                }
+                while (remainder == 0 && cargoSpace != 0);
+
                 testDist();
                 if (validMine)
                 {
+                    //Debug.Log(element.Key);
 
+                    //(this will fall through to maximize code and improve efficiency)
+                    if (remainder > miningSpeed)
+                    { 
+                        //Remainder is assigned the lower of the two values (element.Value if mining speed would strip what's left in the asteroid
+                        remainder = miningSpeed > element.Value ? element.Value : miningSpeed;
+                    }
 
-                    if (element.Value < 1.0)
+                    //Not enough remaining capacity, 
+                    else
                     {
-                        storage[element.Key][0] += element.Value;
-                        elements[element.Key] -= element.Value;
-                        elements.Remove(element.Key);
+                        remainder = remainder > element.Value ? element.Value : remainder;
+                    }
+
+                    if(remainder == 0.0)
+                    {
+                        Debug.Log(element.Key + " storage is full!");
+                        //Want logic here to flag if the storage is full and prevent going down the loop again
                     }
                     else
                     {
-                        storage[element.Key][0] += miningSpeed;
-                        elements[element.Key] -= miningSpeed;
+                        storage[element.Key][0] += remainder;
+                        elements[element.Key] -= remainder;
+                        if (elements[element.Key] == 0.0)
+                        {
+                            elements.Remove(element.Key);
+                        }
                     }
                 }
                 else
@@ -118,7 +169,7 @@ public class minerMod : MonoBehaviour
             //Uncomment lines to test value of storage items
             /*foreach(var item in storage)
             {
-                Debug.Log(item);
+                Debug.Log(item.Key + item.Value[0]);
             }*/
         }
     }
@@ -148,12 +199,7 @@ public class minerMod : MonoBehaviour
         {
             Rigidbody2D currAst = ast.GetComponent<Rigidbody2D>();
             var dist = (currAst.position - new Vector2(playerShip.transform.position.x, playerShip.transform.position.y)).sqrMagnitude;
-            if (closestAsteroid == null)
-            {
-                closestAsteroid = ast;
-                closest = dist;
-            }
-            else if (dist < closest)
+            if (closestAsteroid == null || dist < closest)
             {
                 closestAsteroid = ast;
                 closest = dist;

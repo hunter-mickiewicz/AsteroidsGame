@@ -134,6 +134,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 423268852470382952, guid: 8ea6cfc0cd499204eaf6699786c51f45, type: 3}
+      propertyPath: m_BodyType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 423268852470382952, guid: 8ea6cfc0cd499204eaf6699786c51f45, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 423268852470382959, guid: 8ea6cfc0cd499204eaf6699786c51f45, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -152,7 +160,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 423268852470382959, guid: 8ea6cfc0cd499204eaf6699786c51f45, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 423268852470382959, guid: 8ea6cfc0cd499204eaf6699786c51f45, type: 3}
       propertyPath: m_LocalRotation.x
@@ -164,7 +172,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 423268852470382959, guid: 8ea6cfc0cd499204eaf6699786c51f45, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 423268852470382959, guid: 8ea6cfc0cd499204eaf6699786c51f45, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -176,9 +184,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 423268852470382959, guid: 8ea6cfc0cd499204eaf6699786c51f45, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
+      value: 180
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 8917597113498799415, guid: 8ea6cfc0cd499204eaf6699786c51f45, type: 3}
+      propertyPath: initialLimit
+      value: 5
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 6113884814345405670, guid: 8ea6cfc0cd499204eaf6699786c51f45, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 8ea6cfc0cd499204eaf6699786c51f45, type: 3}
 --- !u!1 &252870032
 GameObject:
@@ -297,6 +310,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Asteroid
       objectReference: {fileID: 0}
+    - target: {fileID: 8874493802895518432, guid: 15ab95617d724b0419e7f7bdeed8732f, type: 3}
+      propertyPath: m_TagString
+      value: Asteroid
+      objectReference: {fileID: 0}
+    - target: {fileID: 8874493802895518435, guid: 15ab95617d724b0419e7f7bdeed8732f, type: 3}
+      propertyPath: weightModifier
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8874493802895518444, guid: 15ab95617d724b0419e7f7bdeed8732f, type: 3}
+      propertyPath: m_Constraints
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8874493802895518444, guid: 15ab95617d724b0419e7f7bdeed8732f, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8874493802895518446, guid: 15ab95617d724b0419e7f7bdeed8732f, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -356,7 +385,6 @@ GameObject:
   - component: {fileID: 588144629}
   - component: {fileID: 588144630}
   - component: {fileID: 588144631}
-  - component: {fileID: 588144632}
   m_Layer: 0
   m_Name: Coin
   m_TagString: Untagged
@@ -484,16 +512,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ship: {fileID: 0}
   boostThrust: 50
---- !u!114 &588144632
+--- !u!1 &1163741100 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 423268852470382947, guid: 8ea6cfc0cd499204eaf6699786c51f45, type: 3}
+  m_PrefabInstance: {fileID: 245028118}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1163741108
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 588144626}
+  m_GameObject: {fileID: 1163741100}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a4db50f8a7713b48a4d14ca3dd4ac92, type: 3}
+  m_Script: {fileID: 11500000, guid: 2cc45d2a577b8bd49a240422768254f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &5694551029330111186
