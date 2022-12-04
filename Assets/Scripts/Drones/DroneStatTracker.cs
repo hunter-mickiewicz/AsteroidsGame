@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class DroneStatTracker : StatTracker
 {
+    public double orbitDistance;
     // Start is called before the first frame update
     void Start()
     {
-        this.miningDistance = 1.0;
+        this.miningDistance = 1.5;
         this.entityType = "Drone";
         this.initialLimit = 0;
+        this.orbitDistance = this.miningDistance - 0.1;
         InstantiateStorage();
     }
 

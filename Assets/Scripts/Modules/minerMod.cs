@@ -147,6 +147,7 @@ public class minerMod : MonoBehaviour
                     if(remainder == 0.0)
                     {
                         Debug.Log(element.Key + " storage is full!");
+                        gameObject.GetComponent<StatTracker>().storageFull = true;
                         //Want logic here to flag if the storage is full and prevent going down the loop again
                     }
                     else
@@ -251,6 +252,7 @@ public class minerMod : MonoBehaviour
             {
                 closestAsteroid = ast;
                 closest = dist;
+                Debug.Log(dist);
             }
         }
 

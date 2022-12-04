@@ -10,16 +10,20 @@ public class orbitalAssistMod : MonoBehaviour
     //Further velocity changes may change the elliptical nature.
     //find some way to calculate the apses? The velocity/distance at the farthest and closest point of the orbit. Once they match, should be good?
 
-    private GameObject playerShip = null; 
+    private GameObject orbiter = null; 
     private Rigidbody2D asteroid = null;
     private bool orbiting = false;
+    private string orbitType;
     public float g;
 
     // Start is called before the first frame update
+
+    //Need to fix begin/continue/end conditions
     void Start()
     {
-    
-        playerShip = GameObject.Find("Player");
+
+        orbiter = gameObject;
+        orbitType = orbiter.GetComponent<StatTracker>().entityType;
         asteroid = getClosestAsteroid().GetComponent<Rigidbody2D>();
         g = asteroid.GetComponent<gravity>().g;
 
@@ -41,14 +45,14 @@ public class orbitalAssistMod : MonoBehaviour
         if (orbiting)
         {
             //gets the direction and distance between ship and asteroid
-            Vector2 dir = playerShip.GetComponent<Rigidbody2D>().position - asteroid.position;
+            Vector2 dir = orbiter.GetComponent<Rigidbody2D>().position - asteroid.position;
             float dist2 = dir.magnitude;
 
             Vector2 orbitInfo = CalcOrbitalVelocity(dist2, dir);
 
             float horizontalVelocity = orbitInfo.x * Mathf.Sin(orbitInfo.y);
             float verticalVelocity = orbitInfo.x * Mathf.Cos(orbitInfo.y);
-            playerShip.GetComponent<Rigidbody2D>().velocity = new Vector2(-horizontalVelocity, verticalVelocity);
+            orbiter.GetComponent<Rigidbody2D>().velocity = new Vector2(-horizontalVelocity, verticalVelocity);
         }
 
     }
@@ -59,7 +63,7 @@ public class orbitalAssistMod : MonoBehaviour
 
         //Test forcing the velocity (manually setting it).
         //If that works, try incremental changes using thrusters 
-        if (Input.GetKeyDown(KeyCode.O))
+        if (BeginTest())
         {
 
             //checks if the ship is currently orbiting
@@ -68,16 +72,16 @@ public class orbitalAssistMod : MonoBehaviour
                 asteroid = getClosestAsteroid().GetComponent<Rigidbody2D>();
 
 
-                Vector2 dir = playerShip.GetComponent<Rigidbody2D>().position - asteroid.position;
+                Vector2 dir = orbiter.GetComponent<Rigidbody2D>().position - asteroid.position;
                 float dist2 = dir.magnitude;
 
                 //checks to see if there is actually gravitational attraction between ship and asteroid
-                if (dist2 <= playerShip.GetComponent<StatTracker>().astGravitationalDist)
+                if (dist2 <= orbiter.GetComponent<StatTracker>().astGravitationalDist)
                 {
                     orbiting = true;
                 }
             }
-            else
+            else if(ContTest())
             {
                 orbiting = false;
             }
@@ -88,7 +92,7 @@ public class orbitalAssistMod : MonoBehaviour
     Vector2 CalcOrbitalVelocity(float distance, Vector2 direction)
     {
 
-        float velocity = (float)Math.Sqrt((float)((g * (playerShip.GetComponent<Rigidbody2D>().mass + asteroid.GetComponent<Rigidbody2D>().mass)) / distance));
+        float velocity = (float)Math.Sqrt((float)((g * (orbiter.GetComponent<Rigidbody2D>().mass + asteroid.GetComponent<Rigidbody2D>().mass)) / distance));
         float angleBetween = Mathf.Atan2(direction.y, direction.x); //* Mathf.Rad2Deg;
 
         return (new Vector2(velocity, angleBetween));
@@ -104,7 +108,7 @@ public class orbitalAssistMod : MonoBehaviour
         foreach (GameObject ast in asteroids)
         {
             Rigidbody2D currAst = ast.GetComponent<Rigidbody2D>();
-            var dist = (currAst.position - new Vector2(playerShip.transform.position.x, playerShip.transform.position.y)).sqrMagnitude;
+            var dist = (currAst.position - new Vector2(orbiter.transform.position.x, orbiter.transform.position.y)).sqrMagnitude;
             if (closestAsteroid == null)
             {
                 closestAsteroid = ast;
@@ -119,4 +123,45 @@ public class orbitalAssistMod : MonoBehaviour
 
         return closestAsteroid;
     }
+
+    bool BeginTest()
+    {
+        switch (orbitType)
+        {
+            case "Player":
+                return Input.GetKeyDown(KeyCode.O);
+            case "Drone":
+                asteroid = getClosestAsteroid().GetComponent<Rigidbody2D>();
+                var dist = (asteroid.GetComponent<Rigidbody2D>().position - new Vector2(orbiter.transform.position.x, orbiter.transform.position.y)).sqrMagnitude;
+                return gameObject.GetComponent<DroneStatTracker>().DroneOn() && dist <= orbiter.GetComponent<DroneStatTracker>().orbitDistance;
+        }
+
+        return false;
+    }
+
+    bool ContTest()
+    {
+        switch (orbitType)
+        {
+            case "Player":
+                return false;
+            case "Drone":
+                return gameObject.GetComponent<StatTracker>().storageFull;
+        }
+
+        return false;
+    }
+
+ /*   bool EndTest()
+    {
+        switch (orbitType)
+        {
+            case "Player":
+                return Input.GetKeyDown(KeyCode.O);
+            case "Drone":
+                return testDist();
+        }
+
+        return false;
+    }*/
 }

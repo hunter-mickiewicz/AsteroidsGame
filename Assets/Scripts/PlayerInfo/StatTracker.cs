@@ -13,6 +13,7 @@ public class StatTracker : MonoBehaviour
     public int astGravitationalDist = 10;
     public double initialLimit = 0;
     public double miningDistance;
+    public bool storageFull = false;
 
     // Start is called before the first frame update
     void Start()
