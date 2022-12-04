@@ -10,16 +10,17 @@ public class cargoMod : MonoBehaviour
     void Start()
     {
 
-        //Ensures the mod is attached to the player
-        if(CompareTag("Player"))
-        {
 
-            //Goes through storage and upgrades each item (this can be done specifically for tiers or items if wanted
-            Dictionary<string, double[]> storage = GetComponent<PlayerStatTracker>().storage;
-            foreach(var item in storage)
+        //Goes through storage and upgrades each item (this can be done specifically for tiers or items if wanted
+        if(GetComponent<StatTracker>() != null)
+        {
+            Dictionary<string, double[]> storage = GetComponent<StatTracker>().storage;
+            foreach (var item in storage)
             {
                 item.Value[1] += storageIncrease;
+                //Debug.Log(item.Key + " " + item.Value[1]);
             }
+
         }
     }
 

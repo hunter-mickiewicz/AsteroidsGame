@@ -6,13 +6,15 @@ using UnityEngine;
 public class gravity : MonoBehaviour
 {
     public float g = 6674;
-    private GameObject playerShip;
+    private List<GameObject> affectedObject = new List<GameObject>();
     private Rigidbody2D currAsteroid;
 
     // Start is called before the first frame update
     void Start()
     {
-        playerShip = GameObject.Find("Player");
+        affectedObject.Add(GameObject.Find("Player"));
+        //Need to go through all object with "Drone" tags
+        //(and possibly others as I add other things to the game)
 
         currAsteroid = GetComponent<Rigidbody2D>();
     }
@@ -20,21 +22,25 @@ public class gravity : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     { 
-        var resForce = Vector2.zero;
-        var dir = currAsteroid.position - new Vector2(playerShip.transform.position.x, playerShip.transform.position.y); // get the force direction
-        var dist1 = dir.magnitude;
-        
-        float dist2 = dir.sqrMagnitude; // get the squared distance
-
-        //Only have gravity affect it if it's close enough (need an in-universe explanation here)
-        if (dist1 < playerShip.GetComponent<PlayerStatTracker>().astGravitationalDist && dist2 != 0)
+        foreach(GameObject attracted in affectedObject)
         {
-            // calculate the force intensity using Newton's law
-            float gForce = (float)(playerShip.GetComponent<Rigidbody2D>().mass * currAsteroid.GetComponent<Rigidbody2D>().mass / dist2);
+            var resForce = Vector2.zero;
+            var dir = currAsteroid.position - new Vector2(attracted.transform.position.x, attracted.transform.position.y); // get the force direction
+            var dist1 = dir.magnitude;
 
-            resForce += gForce * dir.normalized; // accumulate in the resulting force variable
+            float dist2 = dir.sqrMagnitude; // get the squared distance
 
-            playerShip.GetComponent<Rigidbody2D>().AddForce(resForce);
+            //Only have gravity affect it if it's close enough (need an in-universe explanation here)
+            if (dist1 < attracted.GetComponent<StatTracker>().astGravitationalDist && dist2 != 0)
+            {
+                // calculate the force intensity using Newton's law
+                float gForce = (float)(g * attracted.GetComponent<Rigidbody2D>().mass * currAsteroid.GetComponent<Rigidbody2D>().mass / dist2);
+
+                resForce += gForce * dir.normalized; // accumulate in the resulting force variable
+
+                attracted.GetComponent<Rigidbody2D>().AddForce(resForce);
+            }
+
         }
     }
 

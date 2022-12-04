@@ -35,7 +35,7 @@ public class minerMod : MonoBehaviour
     {
         //asteroids = GameObject.FindGameObjectsWithTag("Asteroid");
         playerShip = GameObject.Find("Player");
-        storage = playerShip.GetComponent<PlayerStatTracker>().storage;
+        storage = playerShip.GetComponent<StatTracker>().storage;
 
     }
 
@@ -96,7 +96,7 @@ public class minerMod : MonoBehaviour
                 int cargoSpace = 0;
                 foreach(var item in storage)
                 {
-                    if(playerShip.GetComponent<PlayerStatTracker>().GetRemainingCapacity(item.Key) != 0 && elements.ContainsKey(item.Key))
+                    if(playerShip.GetComponent<StatTracker>().GetRemainingCapacity(item.Key) != 0 && elements.ContainsKey(item.Key))
                     {
                         cargoSpace++;
                     }
@@ -115,7 +115,7 @@ public class minerMod : MonoBehaviour
                     element = elements.ElementAt(nextElem);
 
                     //pulls the remaining capacity for the current element from player
-                    remainder = playerShip.GetComponent<PlayerStatTracker>().GetRemainingCapacity(element.Key);
+                    remainder = playerShip.GetComponent<StatTracker>().GetRemainingCapacity(element.Key);
 
                 }
                 while (remainder == 0 && cargoSpace != 0);
@@ -167,10 +167,10 @@ public class minerMod : MonoBehaviour
             closest = 0; 
             
             //Uncomment lines to test value of storage items
-            foreach(var item in storage)
+            /*foreach(var item in storage)
             {
                 Debug.Log(item.Key + item.Value[0]);
-            }
+            }*/
         }
     }
 

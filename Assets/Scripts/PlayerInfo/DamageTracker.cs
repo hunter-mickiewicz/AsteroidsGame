@@ -15,7 +15,7 @@ public class DamageTracker : MonoBehaviour
     void Start()
     {
         deathSprites = new Sprite[] { deathSprite0, deathSprite1, deathSprite2, deathSprite3 };
-        health = GetComponent<PlayerStatTracker>().health;
+        health = GetComponent<StatTracker>().health;
         
     }
 

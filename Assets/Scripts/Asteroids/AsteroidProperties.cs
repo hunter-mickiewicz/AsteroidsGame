@@ -7,7 +7,7 @@ public class AsteroidProperties : MonoBehaviour
     public Dictionary<string, double> elements = new Dictionary<string, double>();
     public double totalWeight = 0;
     public Rigidbody2D asteroid;
-    public int weightModifier = 1;
+    public int weightModifier = 4;
 
     // Start is called before the first frame update
     void Start()

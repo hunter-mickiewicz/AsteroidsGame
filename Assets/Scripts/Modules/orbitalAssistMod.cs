@@ -72,7 +72,7 @@ public class orbitalAssistMod : MonoBehaviour
                 float dist2 = dir.magnitude;
 
                 //checks to see if there is actually gravitational attraction between ship and asteroid
-                if (dist2 <= playerShip.GetComponent<PlayerStatTracker>().astGravitationalDist)
+                if (dist2 <= playerShip.GetComponent<StatTracker>().astGravitationalDist)
                 {
                     orbiting = true;
                 }
