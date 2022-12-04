@@ -13,60 +13,85 @@ public class orbitalAssistMod : MonoBehaviour
     private GameObject playerShip = null; 
     private Rigidbody2D asteroid = null;
     private bool orbiting = false;
+    public float g;
 
     // Start is called before the first frame update
     void Start()
     {
+    
         playerShip = GameObject.Find("Player");
+        asteroid = getClosestAsteroid().GetComponent<Rigidbody2D>();
+        g = asteroid.GetComponent<gravity>().g;
+
+    }
+
+    //Called every 0.02 seconds (can verify in project settings. If this is different, it will break shit)
+    void FixedUpdate()
+    {
+        /*
+         * CURRENTLY WORKING
+         * Eventual plans:
+         *  Implement the adjustments via AddForce instead of hijacking the velocity
+         *  keep track of the distance, adjust for it as well. 
+         *      Currently the distance fluctuates, it should remain stable for a circular orbit
+        */
+
+        //check velocity against calculation, adjust as necessary
+        if (orbiting)
+        {
+            //gets the direction and distance between ship and asteroid
+            Vector2 dir = playerShip.GetComponent<Rigidbody2D>().position - asteroid.position;
+            float dist2 = dir.magnitude;
+            Debug.Log(dist2);
+
+            Vector2 orbitInfo = CalcOrbitalVelocity(dist2, dir);
+
+            float horizontalVelocity = orbitInfo.x * Mathf.Sin(orbitInfo.y);
+            float verticalVelocity = orbitInfo.x * Mathf.Cos(orbitInfo.y);
+            playerShip.GetComponent<Rigidbody2D>().velocity = new Vector2(-horizontalVelocity, verticalVelocity);
+        }
+
     }
 
     // Update is called once per frame
     void Update()
     {
+
         //Test forcing the velocity (manually setting it).
         //If that works, try incremental changes using thrusters 
         if (Input.GetKeyDown(KeyCode.O))
         {
 
             //checks if the ship is currently orbiting
-            if (!orbiting) {
+            if (!orbiting)
+            {
                 asteroid = getClosestAsteroid().GetComponent<Rigidbody2D>();
 
-                //gets the direction and distance between ship and asteroid
-                var dir = asteroid.position - new Vector2(playerShip.transform.position.x, playerShip.transform.position.y);
+
+                Vector2 dir = playerShip.GetComponent<Rigidbody2D>().position - asteroid.position;
                 float dist2 = dir.magnitude;
 
                 //checks to see if there is actually gravitational attraction between ship and asteroid
                 if (dist2 <= playerShip.GetComponent<PlayerStatTracker>().astGravitationalDist)
                 {
-                    //gets the magnitude of gravitational force
-
-                    //For eliptical orbits
-                    //float velocity = (float)Math.Sqrt(playerShip.GetComponent<Rigidbody2D>().mass + asteroid.GetComponent<Rigidbody2D>().mass * (2 / dist2) - (1 / dist2));
-                    float velocity = (float)(playerShip.GetComponent<Rigidbody2D>().mass * asteroid.GetComponent<Rigidbody2D>().mass * ((2 / dist2) - (1 / dist2)));
-                    Debug.Log(asteroid.GetComponent<Rigidbody2D>().mass);
-                    //for circular orbits
-                    //float velocity = (float)Math.Sqrt((float)((playerShip.GetComponent<Rigidbody2D>().mass + asteroid.GetComponent<Rigidbody2D>().mass) / dist2));
-                    //float velocity = (float)(Math.Sqrt(((playerShip.GetComponent<Rigidbody2D>().mass * asteroid.GetComponent<Rigidbody2D>().mass) / dist2)));
-                    //Debug.Log(velocity);
-
-                    //Need the sin/cos of the ANGLE, not the velocity
-                    double angle = 0 * Math.PI / 180;
-                    Vector2 currVel = playerShip.GetComponent<Rigidbody2D>().velocity;
-                    //playerShip.GetComponent<Rigidbody2D>().velocity = new Vector2((float)(velocity * Math.Cos(angle) + currVel[0]), (float)(velocity * Math.Sin(angle) + currVel[1]));
-                    Vector2 newVel = new Vector2((float)(velocity), (float)(currVel[1]));
-                    //playerShip.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
-                    playerShip.GetComponent<Rigidbody2D>().velocity += newVel;
-                    // playerShip.GetComponent<Rigidbody2D>().AddForce(newVel.normalized);
-
+                    orbiting = true;
                 }
             }
             else
             {
-
+                orbiting = false;
             }
         }
+    }
 
+    //Calculates the total velocity and angle needed to orbit
+    Vector2 CalcOrbitalVelocity(float distance, Vector2 direction)
+    {
+
+        float velocity = (float)Math.Sqrt((float)((g * (playerShip.GetComponent<Rigidbody2D>().mass + asteroid.GetComponent<Rigidbody2D>().mass)) / distance));
+        float angleBetween = Mathf.Atan2(direction.y, direction.x); //* Mathf.Rad2Deg;
+
+        return (new Vector2(velocity, angleBetween));
     }
 
     //Returns the GameObject asteroid which is the closest to the player.

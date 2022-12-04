@@ -9,7 +9,7 @@ public class PlayerStatTracker : MonoBehaviour
     //Storage for elements. first item in array is the amount in storage, second is the limit
     public Dictionary<string, double[]> storage = new Dictionary<string, double[]>();
 
-    public int astGravitationalDist = 20;
+    public int astGravitationalDist = 10;
     public double initialLimit = 5;
 
     // Start is called before the first frame update

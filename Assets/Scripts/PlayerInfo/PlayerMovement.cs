@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
     public Rigidbody2D ship;
     public float vertInput;
     public float horInput;
-    public float turnSpeed = 3.0f;
+    public float turnSpeed = 1.0f;
     public float engineThrust = 0.125f;
     public Vector3 totalVelocity = new Vector3(0, 0, 0);
 

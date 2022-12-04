@@ -146,6 +146,10 @@ PrefabInstance:
       propertyPath: m_CollisionDetection
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 423268852470382957, guid: 8ea6cfc0cd499204eaf6699786c51f45, type: 3}
+      propertyPath: turnSpeed
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 423268852470382958, guid: 8ea6cfc0cd499204eaf6699786c51f45, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -394,7 +398,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8874493802895518435, guid: 15ab95617d724b0419e7f7bdeed8732f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 15ab95617d724b0419e7f7bdeed8732f, type: 3}
 --- !u!1 &588144626
 GameObject:
@@ -618,6 +623,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   validLanding: 1
+--- !u!114 &1163741118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1163741100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a4db50f8a7713b48a4d14ca3dd4ac92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  g: 0
 --- !u!1001 &5694551029330111186
 PrefabInstance:
   m_ObjectHideFlags: 0

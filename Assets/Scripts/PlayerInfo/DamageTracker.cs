@@ -44,6 +44,6 @@ public class DamageTracker : MonoBehaviour
     public void updateDamage(double dmg)
     {
         health -= dmg;
-        Debug.Log(health);
+        //Debug.Log(health);
     }
 }
