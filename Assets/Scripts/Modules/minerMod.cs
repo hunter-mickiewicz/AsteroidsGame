@@ -8,10 +8,11 @@ public class minerMod : MonoBehaviour
     private GameObject closestAsteroid = null;
     private float closest = 0;
     private GameObject[] asteroids;
-    private GameObject playerShip;
+    private GameObject miner;
     private double miningSpeed = 0.015625;
     System.Random gen = new System.Random();
     private bool validMine;
+    private string minerType;
 
     //determines which elements can be mined
     //private int miningTier = 4;
@@ -33,9 +34,10 @@ public class minerMod : MonoBehaviour
     //  rudimentary test shows we likely need to be <0.6 distance
     void Start()
     {
-        //asteroids = GameObject.FindGameObjectsWithTag("Asteroid");
-        playerShip = GameObject.Find("Player");
-        storage = playerShip.GetComponent<StatTracker>().storage;
+        asteroids = GameObject.FindGameObjectsWithTag("Asteroid");
+        minerType = GetComponent<StatTracker>().entityType;
+        miner = gameObject;
+        storage = gameObject.GetComponent<StatTracker>().storage;
 
     }
 
@@ -50,7 +52,7 @@ public class minerMod : MonoBehaviour
         //Do two things--on key up, release the object so we can test for distance on key down.
 
         //Called once no matter how long held
-        if (Input.GetKeyDown(KeyCode.M))
+        if (BeginTest())
         {
 
             //Establishes closest asteroid
@@ -65,7 +67,7 @@ public class minerMod : MonoBehaviour
 
         }
 
-        if (Input.GetKey(KeyCode.M))
+        if (ContTest())
         {
             //Maybe have a preference setting for which elements to mine first, or at all (eventual)?
             //This might be only with a higher tier of miner (or an upgrade), standard just gives random
@@ -96,7 +98,7 @@ public class minerMod : MonoBehaviour
                 int cargoSpace = 0;
                 foreach(var item in storage)
                 {
-                    if(playerShip.GetComponent<StatTracker>().GetRemainingCapacity(item.Key) != 0 && elements.ContainsKey(item.Key))
+                    if(miner.GetComponent<StatTracker>().GetRemainingCapacity(item.Key) != 0 && elements.ContainsKey(item.Key))
                     {
                         cargoSpace++;
                     }
@@ -115,7 +117,7 @@ public class minerMod : MonoBehaviour
                     element = elements.ElementAt(nextElem);
 
                     //pulls the remaining capacity for the current element from player
-                    remainder = playerShip.GetComponent<StatTracker>().GetRemainingCapacity(element.Key);
+                    remainder = miner.GetComponent<StatTracker>().GetRemainingCapacity(element.Key);
 
                 }
                 while (remainder == 0 && cargoSpace != 0);
@@ -161,7 +163,7 @@ public class minerMod : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyUp(KeyCode.M))
+        if (EndTest())
         {
             closestAsteroid = null;
             closest = 0; 
@@ -174,12 +176,54 @@ public class minerMod : MonoBehaviour
         }
     }
 
+    bool BeginTest()
+    {
+        switch (minerType)
+        {
+            case "Player":
+                return Input.GetKeyDown(KeyCode.M);
+            case "Drone":
+
+                break;
+        }
+
+        return false;
+    }
+
+    bool ContTest()
+    {
+        switch (minerType)
+        {
+            case "Player":
+                return Input.GetKey(KeyCode.M);
+            case "Drone":
+
+                break;
+        }
+
+        return false;
+    }
+
+    bool EndTest()
+    {
+        switch (minerType)
+        {
+            case "Player":
+                return Input.GetKeyUp(KeyCode.M);
+            case "Drone":
+
+                break;
+        }
+
+        return false;
+    }
+
     void testDist()
     {
 
-        var dist = (closestAsteroid.GetComponent<Rigidbody2D>().position - new Vector2(playerShip.transform.position.x, playerShip.transform.position.y)).sqrMagnitude;
+        var dist = (closestAsteroid.GetComponent<Rigidbody2D>().position - new Vector2(miner.transform.position.x, miner.transform.position.y)).sqrMagnitude;
 
-        if (dist < 0.7)
+        if (dist < miner.GetComponent<StatTracker>().miningDistance)
         {
             validMine = true;
         }
@@ -192,13 +236,13 @@ public class minerMod : MonoBehaviour
     public GameObject getClosestAsteroid()
     {
         GameObject[] asteroids = GameObject.FindGameObjectsWithTag("Asteroid");
-        GameObject playerShip = GameObject.Find("Player");
+        GameObject miner = GameObject.Find("Player");
         GameObject closestAsteroid = null;
 
         foreach (GameObject ast in asteroids)
         {
             Rigidbody2D currAst = ast.GetComponent<Rigidbody2D>();
-            var dist = (currAst.position - new Vector2(playerShip.transform.position.x, playerShip.transform.position.y)).sqrMagnitude;
+            var dist = (currAst.position - new Vector2(miner.transform.position.x, miner.transform.position.y)).sqrMagnitude;
             if (closestAsteroid == null || dist < closest)
             {
                 closestAsteroid = ast;

@@ -13,6 +13,11 @@ public class gravity : MonoBehaviour
     void Start()
     {
         affectedObject.Add(GameObject.Find("Player"));
+        GameObject[] drones = GameObject.FindGameObjectsWithTag("Drone");
+        foreach(GameObject drone in drones)
+        {
+            affectedObject.Add(drone);
+        }
         //Need to go through all object with "Drone" tags
         //(and possibly others as I add other things to the game)
 

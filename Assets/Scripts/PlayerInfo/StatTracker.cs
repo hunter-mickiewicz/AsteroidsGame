@@ -5,12 +5,14 @@ using UnityEngine;
 public class StatTracker : MonoBehaviour
 {
 
+    public string entityType;
     public double health = 100;
     //Storage for elements. first item in array is the amount in storage, second is the limit
     public Dictionary<string, double[]> storage = new Dictionary<string, double[]>();
 
     public int astGravitationalDist = 10;
     public double initialLimit = 0;
+    public double miningDistance;
 
     // Start is called before the first frame update
     void Start()
