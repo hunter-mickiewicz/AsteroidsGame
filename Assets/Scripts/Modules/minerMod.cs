@@ -42,6 +42,10 @@ public class minerMod : MonoBehaviour
     }
 
     // Update is called once per frame
+    /* Mostly good. Changes to Drone:
+     * Should do something different than just print that it's full of storage. 
+     * Likely shouldn't print errors, assuming it's automated.
+    */
     void Update()
     {
         //Check distance
@@ -183,8 +187,7 @@ public class minerMod : MonoBehaviour
             case "Player":
                 return Input.GetKeyDown(KeyCode.M);
             case "Drone":
-
-                break;
+                return gameObject.GetComponent<DroneStatTracker>().DroneOn();
         }
 
         return false;
@@ -197,8 +200,7 @@ public class minerMod : MonoBehaviour
             case "Player":
                 return Input.GetKey(KeyCode.M);
             case "Drone":
-
-                break;
+                return testDist();
         }
 
         return false;
@@ -211,14 +213,13 @@ public class minerMod : MonoBehaviour
             case "Player":
                 return Input.GetKeyUp(KeyCode.M);
             case "Drone":
-
-                break;
+                return !testDist();
         }
 
         return false;
     }
 
-    void testDist()
+    bool testDist()
     {
 
         var dist = (closestAsteroid.GetComponent<Rigidbody2D>().position - new Vector2(miner.transform.position.x, miner.transform.position.y)).sqrMagnitude;
@@ -226,11 +227,14 @@ public class minerMod : MonoBehaviour
         if (dist < miner.GetComponent<StatTracker>().miningDistance)
         {
             validMine = true;
+            Debug.Log(dist);
         }
         else
         {
             validMine = false;
         }
+
+        return validMine;
     }
 
     public GameObject getClosestAsteroid()

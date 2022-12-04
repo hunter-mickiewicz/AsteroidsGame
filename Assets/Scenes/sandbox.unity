@@ -137,6 +137,9 @@ GameObject:
   - component: {fileID: 44365271}
   - component: {fileID: 44365273}
   - component: {fileID: 44365272}
+  - component: {fileID: 44365276}
+  - component: {fileID: 44365274}
+  - component: {fileID: 44365275}
   m_Layer: 0
   m_Name: Drone
   m_TagString: Drone
@@ -188,7 +191,7 @@ SpriteRenderer:
   m_Sprite: {fileID: 21300000, guid: b520897860de45a489bea7656ba71eef, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
-  m_FlipY: 0
+  m_FlipY: 1
   m_DrawMode: 0
   m_Size: {x: 0.16, y: 0.24}
   m_AdaptiveModeThreshold: 0.5
@@ -203,14 +206,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 44365266}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1, y: 2, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
+  m_LocalPosition: {x: 2.81, y: -0.31, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
 --- !u!114 &44365270
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -287,12 +290,75 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &44365274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 44365266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e490ee45275bc6408df480c5f9ffd83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  validLanding: 1
+--- !u!114 &44365275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 44365266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a97070ee2af68234ea6dca62b620ea4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathSprites: []
+  deathSprite0: {fileID: 21300000, guid: 947c0cbf176869a45b7fd547776a2b0c, type: 3}
+  deathSprite1: {fileID: 21300002, guid: 947c0cbf176869a45b7fd547776a2b0c, type: 3}
+  deathSprite2: {fileID: 21300004, guid: 947c0cbf176869a45b7fd547776a2b0c, type: 3}
+  deathSprite3: {fileID: 21300006, guid: 947c0cbf176869a45b7fd547776a2b0c, type: 3}
+  health: 0
+--- !u!60 &44365276
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 44365266}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.16, y: 0.24}
+    newSize: {x: 0.16, y: 0.24}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -0.08, y: 0.12}
+      - {x: -0.08, y: -0.07}
+      - {x: -0.02, y: -0.089999996}
+      - {x: 0.03, y: -0.089999996}
+      - {x: 0.06, y: -0.049999997}
+      - {x: 0.08, y: 0.07}
+      - {x: 0.08, y: 0.12}
 --- !u!1001 &245028118
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -584,7 +650,6 @@ GameObject:
   - component: {fileID: 588144627}
   - component: {fileID: 588144629}
   - component: {fileID: 588144630}
-  - component: {fileID: 588144631}
   m_Layer: 0
   m_Name: Coin
   m_TagString: Untagged
@@ -698,18 +763,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.1, y: 0.1}
   m_EdgeRadius: 0
---- !u!114 &588144631
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 588144626}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 197ef3a2bad1847459710c9ef869bc22, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &972436671 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8874493802895518432, guid: 15ab95617d724b0419e7f7bdeed8732f, type: 3}

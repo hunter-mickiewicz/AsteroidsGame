@@ -17,10 +17,13 @@ public class cargoMod : MonoBehaviour
     void Update()
     {
         //Goes through storage and upgrades each item (this can be done specifically for tiers or items if wanted
+
+        //Ensures there is a storage to update on object
         if (GetComponent<StatTracker>() != null)
         {
             Dictionary<string, double[]> storage = GetComponent<StatTracker>().storage;
 
+            //Ensures the storage has been instantiated, and the upgrade hasn't been applied
             if(!applied && storage.Count > 0)
             {
                 applied = true;
@@ -28,8 +31,6 @@ public class cargoMod : MonoBehaviour
                 {
                     {
                         item.Value[1] += storageIncrease;
-                        Debug.Log(item.Key + " " + item.Value[1]);
-
                     }
                 }
             }

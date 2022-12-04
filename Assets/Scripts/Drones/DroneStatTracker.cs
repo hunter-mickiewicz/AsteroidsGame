@@ -7,6 +7,7 @@ public class DroneStatTracker : StatTracker
     // Start is called before the first frame update
     void Start()
     {
+        this.miningDistance = 1.0;
         this.entityType = "Drone";
         this.initialLimit = 0;
         InstantiateStorage();
@@ -16,5 +17,13 @@ public class DroneStatTracker : StatTracker
     void Update()
     {
         
+    }
+
+
+    //Function to determine if the drone has been turned on
+    //This will probably change depending on the type of drone (proximity, time, trigger, etc)
+    public bool DroneOn()
+    {
+        return true;
     }
 }

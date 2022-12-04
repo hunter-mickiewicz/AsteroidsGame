@@ -34,6 +34,7 @@ public class orbitalAssistMod : MonoBehaviour
          *  Implement the adjustments via AddForce instead of hijacking the velocity
          *  keep track of the distance, adjust for it as well. 
          *      Currently the distance fluctuates, it should remain stable for a circular orbit
+         *  Some kind of math to determine which orbit direction would be most efficient (if there is a velocity in one direction already)
         */
 
         //check velocity against calculation, adjust as necessary
@@ -42,7 +43,6 @@ public class orbitalAssistMod : MonoBehaviour
             //gets the direction and distance between ship and asteroid
             Vector2 dir = playerShip.GetComponent<Rigidbody2D>().position - asteroid.position;
             float dist2 = dir.magnitude;
-            Debug.Log(dist2);
 
             Vector2 orbitInfo = CalcOrbitalVelocity(dist2, dir);
 
