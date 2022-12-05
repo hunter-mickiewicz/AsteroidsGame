@@ -18,7 +18,7 @@ public class orbitalAssistMod : MonoBehaviour
 
     // Start is called before the first frame update
 
-    //Need to fix begin/continue/end conditions
+    //Need to fix begin/continue/end conditions. Currently has a decaying orbit
     void Start()
     {
 
