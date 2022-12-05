@@ -228,7 +228,6 @@ public class minerMod : MonoBehaviour
         if (dist < miner.GetComponent<StatTracker>().miningDistance)
         {
             validMine = true;
-            Debug.Log(dist);
         }
         else
         {
@@ -252,7 +251,6 @@ public class minerMod : MonoBehaviour
             {
                 closestAsteroid = ast;
                 closest = dist;
-                Debug.Log(dist);
             }
         }
 

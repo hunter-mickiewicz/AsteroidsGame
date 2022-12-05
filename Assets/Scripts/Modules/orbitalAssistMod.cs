@@ -60,6 +60,11 @@ public class orbitalAssistMod : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(orbitType == "")
+        {
+            orbitType = orbiter.GetComponent<StatTracker>().entityType;
+            Debug.Log(orbitType);
+        }
 
         //Test forcing the velocity (manually setting it).
         //If that works, try incremental changes using thrusters 
@@ -133,7 +138,8 @@ public class orbitalAssistMod : MonoBehaviour
             case "Drone":
                 asteroid = getClosestAsteroid().GetComponent<Rigidbody2D>();
                 var dist = (asteroid.GetComponent<Rigidbody2D>().position - new Vector2(orbiter.transform.position.x, orbiter.transform.position.y)).sqrMagnitude;
-                return gameObject.GetComponent<DroneStatTracker>().DroneOn() && dist <= orbiter.GetComponent<DroneStatTracker>().orbitDistance;
+                Debug.Log("distance: " + dist);
+                return ((gameObject.GetComponent<DroneStatTracker>().DroneOn()) && (dist <= orbiter.GetComponent<DroneStatTracker>().orbitDistance));
         }
 
         return false;
