@@ -13,7 +13,7 @@ public class orbitalAssistMod : MonoBehaviour
     private GameObject orbiter = null; 
     private Rigidbody2D asteroid = null;
     private bool orbiting = false;
-    private string orbitType;
+    private string orbitType = "";
     private float orbitDistance = -1;
     public float g;
 

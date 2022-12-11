@@ -9,15 +9,13 @@ public class gravity : MonoBehaviour
     private List<GameObject> affectedObject = new List<GameObject>();
     private Rigidbody2D currAsteroid;
 
+    //potential update--dynamically get list of drones, player, etc. and apply gravity function to each, rather than a list of all
     // Start is called before the first frame update
     void Start()
     {
         affectedObject.Add(GameObject.Find("Player"));
-        GameObject[] drones = GameObject.FindGameObjectsWithTag("Drone");
-        foreach(GameObject drone in drones)
-        {
-            affectedObject.Add(drone);
-        }
+
+
         //Need to go through all object with "Drone" tags
         //(and possibly others as I add other things to the game)
 
@@ -49,6 +47,27 @@ public class gravity : MonoBehaviour
         }
     }
 
+    void Update()
+    {
+        GameObject[] drones = GameObject.FindGameObjectsWithTag("Drone");
+
+        //-1 to account for player (will need to fix to account for other objects
+        if(affectedObject.Count - 1 != drones.Length)
+        {
+            Debug.Log(affectedObject.Count);
+            foreach (GameObject drone in drones)
+            {
+                if (!affectedObject.Contains(drone))
+                {
+                    affectedObject.Add(drone);
+
+                }
+            }
+
+        }
+
+    }
+
     void OnTriggerStay2D(Collider2D ship)
     {
         //Placeholder -- actual damage should be a function of gravity (higher g force, more damage)
@@ -58,4 +77,5 @@ public class gravity : MonoBehaviour
             ship.GetComponent<DamageTracker>().updateDamage(1);
         }
     }
+
 }
