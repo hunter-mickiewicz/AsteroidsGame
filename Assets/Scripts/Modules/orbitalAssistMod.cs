@@ -14,6 +14,7 @@ public class orbitalAssistMod : MonoBehaviour
     private Rigidbody2D asteroid = null;
     private bool orbiting = false;
     private string orbitType;
+    private float orbitDistance = -1;
     public float g;
 
     // Start is called before the first frame update
@@ -36,9 +37,8 @@ public class orbitalAssistMod : MonoBehaviour
          * CURRENTLY WORKING
          * Eventual plans:
          *  Implement the adjustments via AddForce instead of hijacking the velocity
-         *  keep track of the distance, adjust for it as well. 
-         *      Currently the distance fluctuates, it should remain stable for a circular orbit
          *  Some kind of math to determine which orbit direction would be most efficient (if there is a velocity in one direction already)
+         *  End test--allow ship to move as normal, drop orbit distance to -1 again
         */
 
         //check velocity against calculation, adjust as necessary
@@ -48,7 +48,21 @@ public class orbitalAssistMod : MonoBehaviour
             Vector2 dir = orbiter.GetComponent<Rigidbody2D>().position - asteroid.position;
             float dist2 = dir.magnitude;
 
+            //Instantiates the original orbiting distance
+            if(orbitDistance == -1)
+            {
+                orbitDistance = dist2;
+            }
+
+
             Vector2 orbitInfo = CalcOrbitalVelocity(dist2, dir);
+
+            //Failsafe against a decaying orbit (boosts the velocity if the distance drops below the original orbiting distance)
+            //I think this is due to compounding errors in floating point arithmetic
+            if(orbitDistance > dist2)
+            {
+                orbitInfo.x += orbitInfo.x * (float)1.1;
+            }
 
             float horizontalVelocity = orbitInfo.x * Mathf.Sin(orbitInfo.y);
             float verticalVelocity = orbitInfo.x * Mathf.Cos(orbitInfo.y);
@@ -63,7 +77,6 @@ public class orbitalAssistMod : MonoBehaviour
         if(orbitType == "")
         {
             orbitType = orbiter.GetComponent<StatTracker>().entityType;
-            Debug.Log(orbitType);
         }
 
         //Test forcing the velocity (manually setting it).
@@ -98,7 +111,7 @@ public class orbitalAssistMod : MonoBehaviour
     {
 
         float velocity = (float)Math.Sqrt((float)((g * (orbiter.GetComponent<Rigidbody2D>().mass + asteroid.GetComponent<Rigidbody2D>().mass)) / distance));
-        float angleBetween = Mathf.Atan2(direction.y, direction.x); //* Mathf.Rad2Deg;
+        float angleBetween = Mathf.Atan2(direction.y, direction.x);
 
         return (new Vector2(velocity, angleBetween));
     }
@@ -138,7 +151,6 @@ public class orbitalAssistMod : MonoBehaviour
             case "Drone":
                 asteroid = getClosestAsteroid().GetComponent<Rigidbody2D>();
                 var dist = (asteroid.GetComponent<Rigidbody2D>().position - new Vector2(orbiter.transform.position.x, orbiter.transform.position.y)).sqrMagnitude;
-                Debug.Log("distance: " + dist);
                 return ((gameObject.GetComponent<DroneStatTracker>().DroneOn()) && (dist <= orbiter.GetComponent<DroneStatTracker>().orbitDistance));
         }
 

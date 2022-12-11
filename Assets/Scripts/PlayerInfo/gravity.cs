@@ -26,8 +26,8 @@ public class gravity : MonoBehaviour
 
     // Update is called once per frame
     void FixedUpdate()
-    { 
-        foreach(GameObject attracted in affectedObject)
+    {
+        foreach (GameObject attracted in affectedObject)
         {
             var resForce = Vector2.zero;
             var dir = currAsteroid.position - new Vector2(attracted.transform.position.x, attracted.transform.position.y); // get the force direction
